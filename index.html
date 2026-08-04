@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mo God Mo Love — The Grace Blazer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0a09;
+    --ink-soft:#17130f;
+    --ink-panel:#1c1712;
+    --gold:#c8a464;
+    --gold-bright:#e6c98c;
+    --wine:#5c1a2b;
+    --wine-bright:#8c2c42;
+    --cream:#f4ead9;
+    --cream-dim:#cbbfa9;
+    --cream-faint:#a89a80;
+    --line:rgba(200,164,100,0.22);
+    --shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  ::selection{background:var(--wine);color:var(--cream);}
+
+  /* Reveal on scroll */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.9s ease, transform 0.9s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* Announcement bar */
+  .announce{
+    background:linear-gradient(90deg,var(--wine),var(--wine-bright));
+    color:var(--cream);
+    text-align:center;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    padding:10px 16px;
+    font-weight:500;
+  }
+  .announce span{color:var(--gold-bright);font-weight:600;}
+
+  /* Nav */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(12,10,9,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand svg{width:34px;height:34px;flex:none;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:'Fraunces',serif;font-size:16.5px;letter-spacing:0.03em;color:var(--cream);}
+  .brand-text small{font-size:9.5px;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;}
+  .navlinks{display:flex;gap:38px;font-size:13.5px;letter-spacing:0.04em;}
+  .navlinks a{position:relative;color:var(--cream-dim);transition:color .25s ease;}
+  .navlinks a:hover{color:var(--gold-bright);}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:width .25s ease;}
+  .navlinks a:hover::after{width:100%;}
+  .navcta{
+    border:1px solid var(--gold);
+    color:var(--gold-bright);
+    padding:9px 20px;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    border-radius:2px;
+    transition:all .25s ease;
+  }
+  .navcta:hover{background:var(--gold);color:var(--ink);}
+  .menu-btn{display:none;background:none;border:none;color:var(--cream);font-size:22px;cursor:pointer;}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    padding:120px 32px 100px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-watermark{
+    position:absolute;right:-120px;top:-140px;
+    width:640px;height:640px;opacity:0.05;
+    pointer-events:none;
+  }
+  .hero-grid{
+    max-width:1180px;margin:0 auto;
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:70px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:11.5px;letter-spacing:0.24em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:26px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);}
+  .hero h1{
+    font-size:clamp(40px,5.4vw,66px);
+    line-height:1.04;
+    color:var(--cream);
+    margin-bottom:26px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold-bright);
+    font-weight:400;
+  }
+  .hero p.lead{
+    font-size:17px;color:var(--cream-dim);max-width:460px;margin-bottom:38px;
+    font-weight:300;
+  }
+  .hero-ctas{display:flex;gap:18px;flex-wrap:wrap;align-items:center;}
+  .btn-primary{
+    background:var(--gold);color:var(--ink);
+    padding:16px 34px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+    font-weight:600;border-radius:2px;transition:all .25s ease;
+    box-shadow:0 14px 30px -12px rgba(200,164,100,0.5);
+  }
+  .btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+  .btn-ghost{
+    color:var(--cream);font-size:13px;letter-spacing:0.06em;
+    padding:16px 6px;border-bottom:1px solid var(--line);
+    text-transform:uppercase;transition:border-color .25s ease;
+  }
+  .btn-ghost:hover{border-color:var(--gold);}
+
+  /* Hero visual card */
+  .hero-visual{
+    position:relative;
+    aspect-ratio:4/5;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(200,164,100,0.12), transparent 55%),
+      linear-gradient(160deg,#1a1512,#0c0a09 70%);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--shadow);
+  }
+  .hero-visual .frame-inner{
+    position:absolute;inset:18px;border:1px solid var(--line);border-radius:2px;
+  }
+  .placeholder-mark{
+    text-align:center;color:var(--cream-faint);
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+    padding:20px;
+  }
+  .placeholder-mark svg{width:56px;height:56px;opacity:0.7;}
+  .placeholder-mark .lbl{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--gold-bright);}
+  .placeholder-mark .sub{font-size:11px;letter-spacing:0.06em;max-width:220px;line-height:1.5;}
+  .hero-visual .tag{
+    position:absolute;bottom:26px;left:26px;right:26px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+  }
+  .hero-visual .tag .price{font-family:'Fraunces',serif;font-size:22px;color:var(--gold-bright);}
+  .hero-visual .tag .name{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-dim);}
+
+  /* Section shared */
+  section{padding:110px 0;}
+  .section-head{max-width:640px;margin:0 auto 64px;text-align:center;}
+  .section-head .eyebrow{justify-content:center;}
+  .section-head .eyebrow::before{display:none;}
+  .section-head h2{font-size:clamp(30px,3.6vw,44px);color:var(--cream);margin-bottom:18px;}
+  .section-head p{color:var(--cream-dim);font-size:15.5px;font-weight:300;}
+
+  /* Meaning badges */
+  .meaning{background:var(--ink-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .badges{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:1000px;margin:0 auto;}
+  .badge{padding:0 40px;text-align:center;position:relative;}
+  .badge:not(:last-child)::after{
+    content:"";position:absolute;right:0;top:10%;bottom:10%;width:1px;
+    background:var(--line);
+  }
+  .badge-ring{
+    width:96px;height:96px;border:1px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 26px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:var(--gold-bright);
+    position:relative;
+  }
+  .badge-ring::before{
+    content:"";position:absolute;inset:-7px;border:1px solid var(--line);border-radius:50%;
+  }
+  .badge h3{font-size:19px;color:var(--cream);margin-bottom:12px;font-weight:500;}
+  .badge p{font-size:14px;color:var(--cream-dim);font-weight:300;}
+
+  /* Story */
+  .story{position:relative;}
+  .story-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:80px;align-items:center;}
+  .story-frame{
+    aspect-ratio:3/4;border:1px solid var(--line);border-radius:4px;
+    background:linear-gradient(150deg,#1a1512,#0c0a09);
+    display:flex;align-items:center;justify-content:center;position:relative;
+    box-shadow:var(--shadow);
+  }
+  .story-frame .frame-inner{position:absolute;inset:16px;border:1px solid var(--line);}
+  .story h2{font-size:clamp(28px,3.4vw,38px);margin-bottom:24px;}
+  .story .signature-quote{
+    font-family:'Fraunces',serif;font-style:italic;font-size:20px;color:var(--gold-bright);
+    border-left:2px solid var(--gold);padding-left:22px;margin:30px 0;line-height:1.5;
+  }
+  .story p{color:var(--cream-dim);font-weight:300;margin-bottom:16px;font-size:15.5px;}
+  .story .attribution{margin-top:26px;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);}
+
+  /* Shop */
+  .shop{background:var(--ink-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .products{display:grid;grid-template-columns:1fr 1fr;gap:44px;max-width:980px;margin:0 auto;}
+  .product-card{
+    background:var(--ink-panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
+  .product-photo{
+    aspect-ratio:1/1;position:relative;
+    background:radial-gradient(circle at 60% 30%, rgba(200,164,100,0.1), transparent 60%), #141110;
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--line);
+  }
+  .product-photo .frame-inner{position:absolute;inset:14px;border:1px dashed var(--line);}
+  .badge-pill{
+    position:absolute;top:16px;left:16px;
+    font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;
+    padding:6px 12px;border-radius:20px;
+  }
+  .badge-pill.now{background:var(--gold);color:var(--ink);}
+  .badge-pill.soon{border:1px solid var(--gold);color:var(--gold-bright);}
+  .product-info{padding:28px 26px 30px;}
+  .product-info .pname{font-family:'Fraunces',serif;font-size:21px;color:var(--cream);margin-bottom:6px;}
+  .product-info .pdetail{font-size:12.5px;color:var(--cream-faint);letter-spacing:0.04em;margin-bottom:16px;}
+  .product-info .prow{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+  .product-info .price{font-family:'Fraunces',serif;font-size:24px;color:var(--gold-bright);}
+  .product-info .price small{font-size:12px;color:var(--cream-faint);font-family:'Inter',sans-serif;}
+  .sizes{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+  .sizes span{
+    font-size:11px;border:1px solid var(--line);color:var(--cream-dim);
+    padding:5px 10px;border-radius:2px;letter-spacing:0.03em;
+  }
+  .btn-block{
+    display:block;width:100%;text-align:center;padding:15px;
+    font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;border-radius:2px;
+    transition:all .25s ease;font-weight:600;
+  }
+  .btn-block.solid{background:var(--gold);color:var(--ink);}
+  .btn-block.solid:hover{background:var(--gold-bright);}
+  .btn-block.outline{background:transparent;border:1px solid var(--gold);color:var(--gold-bright);}
+  .btn-block.outline:hover{background:var(--gold);color:var(--ink);}
+
+  /* Gallery */
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .occasion-card{
+    aspect-ratio:3/4;border:1px solid var(--line);border-radius:4px;
+    background:linear-gradient(160deg,#181310,#0c0a09);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    position:relative;overflow:hidden;transition:transform .3s ease;
+  }
+  .occasion-card:hover{transform:translateY(-4px);}
+  .occasion-card svg{width:30px;height:30px;opacity:0.75;}
+  .occasion-card span{font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--cream-dim);text-align:center;padding:0 12px;}
+
+  /* Verse band */
+  .versewrap{
+    text-align:center;padding:90px 32px;position:relative;
+    background:linear-gradient(180deg,var(--ink),var(--wine) 400%);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .versewrap .mark{width:44px;height:44px;margin:0 auto 30px;opacity:0.85;}
+  .versewrap p{
+    font-family:'Fraunces',serif;font-style:italic;font-size:clamp(22px,2.8vw,32px);
+    max-width:720px;margin:0 auto 20px;color:var(--cream);line-height:1.4;
+  }
+  .versewrap .ref{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);}
+
+  /* Footer */
+  footer{padding:80px 0 40px;}
+  .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:60px;margin-bottom:70px;}
+  .foot-brand .brand{margin-bottom:18px;}
+  .foot-brand p{color:var(--cream-dim);font-size:14px;font-weight:300;max-width:280px;}
+  footer h4{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  footer ul a{color:var(--cream-dim);font-size:14px;transition:color .25s ease;}
+  footer ul a:hover{color:var(--gold-bright);}
+  .pay-methods{display:flex;flex-wrap:wrap;gap:10px;}
+  .pay-methods span{
+    font-size:11.5px;border:1px solid var(--line);padding:7px 12px;border-radius:20px;color:var(--cream-dim);
+  }
+  .foot-bottom{
+    border-top:1px solid var(--line);padding-top:28px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-size:12px;color:var(--cream-faint);letter-spacing:0.03em;
+  }
+  .foot-bottom .hearts{color:var(--wine-bright);}
+
+  @media (max-width:860px){
+    .navlinks{display:none;}
+    .menu-btn{display:block;}
+    .hero-grid,.story-grid{grid-template-columns:1fr;}
+    .hero-visual,.story-frame{order:-1;max-width:420px;margin:0 auto 10px;}
+    .badges{grid-template-columns:1fr;gap:44px;}
+    .badge:not(:last-child)::after{display:none;}
+    .products{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .foot-grid{grid-template-columns:1fr;gap:36px;}
+    section{padding:80px 0;}
+    .wrap{padding:0 22px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">A quiet season of grace — use code <span>STYLE25</span> for 25% off the first release</div>
+
+<header>
+  <nav>
+    <div class="brand">
+      <svg viewBox="0 0 48 48" fill="none">
+        <path d="M24 6 L24 42 M14 14 L34 14" stroke="#c8a464" stroke-width="1.6"/>
+        <path d="M24 22c-3.4-5-11-3.6-11 2.2 0 5.4 6.6 9 11 13.3 4.4-4.3 11-7.9 11-13.3C35 18.4 27.4 17 24 22z" stroke="#8c2c42" stroke-width="1.6" fill="none"/>
+      </svg>
+      <div class="brand-text">
+        <b>Mo God Mo Love</b>
+        <small>Est. Faith &amp; Fashion</small>
+      </div>
+    </div>
+    <div class="navlinks">
+      <a href="#shop">Shop</a>
+      <a href="#meaning">The Meaning</a>
+      <a href="#story">Our Story</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#shop" class="navcta">Shop Now</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <svg class="hero-watermark" viewBox="0 0 200 200" fill="none">
+    <path d="M100 20 L100 180 M60 55 L140 55" stroke="#c8a464" stroke-width="1"/>
+  </svg>
+  <div class="hero-grid">
+    <div class="reveal">
+      <div class="eyebrow">New &middot; Limited Release</div>
+      <h1>Wear the message.<br>Walk in <em>the light.</em></h1>
+      <p class="lead">A blazer stitched with three words for the woman who knows exactly whose she is — Product of God's Grace, embroidered into every seam, worn into every room.</p>
+      <div class="hero-ctas">
+        <a href="#shop" class="btn-primary">Shop The Blazer</a>
+        <a href="#story" class="btn-ghost">Read Our Story</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="frame-inner"></div>
+      <div class="placeholder-mark">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="2" stroke="#c8a464" stroke-width="1"/><path d="M14 30l7-9 6 7 5-6 6 8" stroke="#c8a464" stroke-width="1.2"/><circle cx="16" cy="15" r="2.4" stroke="#c8a464" stroke-width="1.2"/></svg>
+        <div class="lbl">Product photo goes here</div>
+        <div class="sub">Swap this frame for a photo of Monique or a model wearing the blazer</div>
+      </div>
+      <div class="tag">
+        <div class="name">The Grace Blazer</div>
+        <div class="price">$68</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="meaning" id="meaning">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">What The Embroidery Says</div>
+      <h2>Three words. One declaration.</h2>
+      <p>Every blazer carries a quiet sermon stitched across the lapel and pockets — a reminder of who you are before you say a single word.</p>
+    </div>
+    <div class="badges">
+      <div class="badge reveal">
+        <div class="badge-ring">Product<br>of</div>
+        <h3>&ldquo;Product of&rdquo;</h3>
+        <p>A declaration of who you are — intentionally and wonderfully made, on purpose, by design.</p>
+      </div>
+      <div class="badge reveal">
+        <div class="badge-ring">God's</div>
+        <h3>&ldquo;God's&rdquo;</h3>
+        <p>Not by luck or by chance. He is the source of your life, your strength, and every good thing you carry.</p>
+      </div>
+      <div class="badge reveal">
+        <div class="badge-ring">Grace</div>
+        <h3>&ldquo;Grace&rdquo;</h3>
+        <p>Unearned. Unmatched. Unstoppable. Grace covers your past, holds your present, and secures what's ahead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <div class="story-frame reveal">
+      <div class="frame-inner"></div>
+      <div class="placeholder-mark">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="2" stroke="#c8a464" stroke-width="1"/><circle cx="24" cy="18" r="6" stroke="#c8a464" stroke-width="1.2"/><path d="M12 38c2-8 8-12 12-12s10 4 12 12" stroke="#c8a464" stroke-width="1.2"/></svg>
+        <div class="lbl">Photo of Monique</div>
+        <div class="sub">A portrait here makes the story feel personal and real</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">Our Story</div>
+      <h2>A word from Monique</h2>
+      <p>Mo God Mo Love didn't start in a studio — it started in a season of holding on. Every piece we make carries a message I needed to hear myself: that I am not an accident, not a mistake, not defined by what I've walked through. I'm a product of God's grace, and so are you.</p>
+      <div class="signature-quote">"I wanted a blazer that could preach without saying a word — something you could wear to church on Sunday and to a boardroom on Monday, and mean it either way."</div>
+      <p>Every blazer is made in small batches, sized S through 2X, in black — with more colors, more styles, and more of the story still to come.</p>
+      <div class="attribution">— Monique M. Lovelace, Founder</div>
+    </div>
+  </div>
+</section>
+
+<section class="shop" id="shop">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Shop The Collection</div>
+      <h2>Two pieces. One promise.</h2>
+      <p>Handled in small runs, made to be lived in — from the pew to the podium.</p>
+    </div>
+    <div class="products">
+      <div class="product-card reveal">
+        <div class="product-photo">
+          <div class="frame-inner"></div>
+          <span class="badge-pill now">Available Now</span>
+          <div class="placeholder-mark">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M17 12l7-4 7 4v3l6 3-4 20H15L11 18l6-3z" stroke="#c8a464" stroke-width="1.2"/></svg>
+            <div class="sub">Product photo — The Grace Blazer</div>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="pname">The Grace Blazer</div>
+          <div class="pdetail">Black &middot; Embroidered Lapel &amp; Pockets</div>
+          <div class="prow">
+            <div class="price">$68 <small>USD</small></div>
+          </div>
+          <div class="sizes"><span>S</span><span>M</span><span>L</span><span>XL</span><span>2X</span></div>
+          <a href="#contact" class="btn-block solid">Reserve Yours</a>
+        </div>
+      </div>
+      <div class="product-card reveal">
+        <div class="product-photo">
+          <div class="frame-inner"></div>
+          <span class="badge-pill soon">Coming Soon</span>
+          <div class="placeholder-mark">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M17 12l7-4 7 4v3l6 3-4 20H15L11 18l6-3z" stroke="#c8a464" stroke-width="1.2"/></svg>
+            <div class="sub">Product photo — The Legacy Blazer</div>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="pname">The Legacy Blazer</div>
+          <div class="pdetail">Next Colorway &middot; Details Dropping Soon</div>
+          <div class="prow">
+            <div class="price">$— <small>Notify me</small></div>
+          </div>
+          <div class="sizes"><span>S</span><span>M</span><span>L</span><span>XL</span><span>2X</span></div>
+          <a href="#contact" class="btn-block outline">Join The Waitlist</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Shine Wherever You Go</div>
+      <h2>Made for every room you walk into</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="occasion-card reveal">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M24 6l3 8h8l-6.5 5 2.5 8-7-5-7 5 2.5-8L13 14h8z" stroke="#c8a464" stroke-width="1.1"/></svg>
+        <span>Sunday Service</span>
+      </div>
+      <div class="occasion-card reveal">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M24 8c-5 0-8 4-8 8 0 6 8 20 8 20s8-14 8-20c0-4-3-8-8-8z" stroke="#c8a464" stroke-width="1.1"/></svg>
+        <span>Weddings &amp; Celebrations</span>
+      </div>
+      <div class="occasion-card reveal">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="12" stroke="#c8a464" stroke-width="1.1"/><path d="M24 12v4M24 32v4M12 24h4M32 24h4" stroke="#c8a464" stroke-width="1.1"/></svg>
+        <span>Brunch &amp; Day Out</span>
+      </div>
+      <div class="occasion-card reveal">
+        <svg viewBox="0 0 48 48" fill="none"><rect x="12" y="18" width="24" height="16" rx="1" stroke="#c8a464" stroke-width="1.1"/><path d="M18 18v-4h12v4" stroke="#c8a464" stroke-width="1.1"/></svg>
+        <span>Work &amp; Business</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="versewrap reveal">
+  <svg class="mark" viewBox="0 0 48 48" fill="none"><path d="M24 8 L24 40 M15 16 L33 16" stroke="#c8a464" stroke-width="1.2"/></svg>
+  <p>"She is clothed with strength and dignity, and she laughs without fear of the future."</p>
+  <div class="ref">Proverbs 31:25</div>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <svg viewBox="0 0 48 48" fill="none" width="30" height="30">
+            <path d="M24 6 L24 42 M14 14 L34 14" stroke="#c8a464" stroke-width="1.6"/>
+            <path d="M24 22c-3.4-5-11-3.6-11 2.2 0 5.4 6.6 9 11 13.3 4.4-4.3 11-7.9 11-13.3C35 18.4 27.4 17 24 22z" stroke="#8c2c42" stroke-width="1.6" fill="none"/>
+          </svg>
+          <div class="brand-text"><b>Mo God Mo Love</b></div>
+        </div>
+        <p>Faith-rooted fashion made for the women who wear their testimony out loud. Founded by Monique M. Lovelace.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:8599823455">859&#8209;982&#8209;3455</a></li>
+          <li><a href="#">Facebook — Monique M. Lovelace</a></li>
+          <li><a href="#">Messenger — Monique M. Lovelace</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Payment Options</h4>
+        <div class="pay-methods">
+          <span>Cash</span><span>Zelle</span><span>CashApp</span><span>PayPal</span><span>Apple Pay</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>&copy; 2026 Mo God Mo Love. All rights reserved.</div>
+      <div class="hearts">Made with faith &amp; love — help us spread it further.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.15});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
