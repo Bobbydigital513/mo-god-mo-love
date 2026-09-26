@@ -322,6 +322,38 @@
   .btn-block.outline:hover{color:var(--ink);}
   .btn-block.outline:hover::before{transform:translateY(0);}
 
+
+  /* ============ ORDER FORM ============ */
+  .order{background:var(--ink-soft);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}
+  .order-card{max-width:700px;margin:0 auto;background:var(--ink-panel);border:1px solid var(--line-soft);
+              border-radius:4px;padding:44px 42px 46px;box-shadow:var(--shadow);}
+  .field{margin-bottom:22px;}
+  .field label{display:block;font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;
+               color:var(--gold);margin-bottom:9px;}
+  .field input,.field select,.field textarea{
+    width:100%;background:rgba(12,10,9,0.6);border:1px solid var(--line);border-radius:2px;
+    color:var(--cream);font-family:'Inter',sans-serif;font-size:14.5px;padding:13px 15px;
+    transition:border-color .3s var(--ease),background .3s var(--ease);
+  }
+  .field textarea{min-height:110px;resize:vertical;}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--gold);background:rgba(12,10,9,0.85);
+  }
+  .field input::placeholder,.field textarea::placeholder{color:var(--cream-faint);}
+  .field select option{background:#1a1512;color:var(--cream);}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .order-note{font-size:12.5px;color:var(--cream-faint);margin-top:18px;text-align:center;line-height:1.6;}
+  .order-note b{color:var(--cream-dim);font-weight:500;}
+  .form-status{margin-top:18px;text-align:center;font-size:14px;min-height:22px;}
+  .form-status.ok{color:var(--gold-bright);}
+  .form-status.err{color:#e08a9a;}
+  button.btn-block{border:none;cursor:pointer;font-family:'Inter',sans-serif;}
+  button.btn-block[disabled]{opacity:.55;cursor:wait;}
+  @media (max-width:940px){
+    .order-card{padding:32px 24px 34px;}
+    .field-row{grid-template-columns:1fr;gap:0;}
+  }
+
   /* ============ VERSE ============ */
   .verse{position:relative;padding:150px 34px;text-align:center;overflow:hidden;
          border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}
@@ -551,7 +583,7 @@
           <div class="pdetail">Black &middot; Embroidered Lapel &amp; Pockets</div>
           <div class="price">$68 <small>USD</small></div>
           <div class="sizes"><span>S</span><span>M</span><span>L</span><span>XL</span><span>2X</span></div>
-          <a href="#contact" class="btn-block solid"><span>Reserve Yours</span></a>
+          <a href="#order" class="btn-block solid"><span>Reserve Yours</span></a>
         </div>
       </article>
       <article class="card tilt rv" data-d="2">
@@ -564,9 +596,71 @@
           <div class="pdetail">Next Colorway &middot; Details Dropping Soon</div>
           <div class="price">$&mdash; <small>Notify me</small></div>
           <div class="sizes"><span>S</span><span>M</span><span>L</span><span>XL</span><span>2X</span></div>
-          <a href="#contact" class="btn-block outline"><span>Join The Waitlist</span></a>
+          <a href="#order" class="btn-block outline"><span>Join The Waitlist</span></a>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+
+<section class="order" id="order">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow rv">Reserve Your Blazer</div>
+      <h2 class="rv" data-d="1">Let&rsquo;s get you fitted.</h2>
+      <p class="rv" data-d="2">Tell Monique what you need and she&rsquo;ll reach out personally to confirm your size and arrange payment.</p>
+    </div>
+
+    <div class="order-card rv" data-d="1">
+      <!--
+        Set ORDER_ENDPOINT in the script below to a Formspree form URL
+        (formspree.io -> New Form -> copy the endpoint). Until that is set the
+        form falls back to opening a pre-filled email, so it still works.
+      -->
+      <form id="orderForm" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" required placeholder="First and last">
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone</label>
+            <input id="f-phone" name="phone" type="tel" required placeholder="(859) 000-0000">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-piece">Piece</label>
+            <select id="f-piece" name="piece">
+              <option>The Grace Blazer — $68</option>
+              <option>The Legacy Blazer — waitlist</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-size">Size</label>
+            <select id="f-size" name="size">
+              <option>S</option><option>M</option><option>L</option><option>XL</option><option>2X</option>
+              <option>Not sure — help me choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-notes">Anything else?</label>
+          <textarea id="f-notes" name="notes" placeholder="Occasion, timing, questions about fit…"></textarea>
+        </div>
+        <button type="submit" class="btn-block solid" id="orderSubmit"><span>Send My Reservation</span></button>
+        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+      </form>
+      <p class="order-note">
+        No payment is taken here. Monique confirms your order first, then you settle up by
+        <b>Cash, Zelle, CashApp, PayPal or Apple&nbsp;Pay</b>. Prefer to talk?
+        Call <a href="tel:8599823455" style="color:var(--gold-bright)">859&#8209;982&#8209;3455</a>.
+      </p>
     </div>
   </div>
 </section>
@@ -767,6 +861,66 @@ if (!reduced && matchMedia('(pointer:fine)').matches) {
     card.addEventListener('pointerleave', () => { card.style.transform = ''; });
   });
 }
+
+
+/* ---------- order form ---------- */
+(function orderForm(){
+  // Paste a Formspree endpoint here to have submissions emailed to Monique.
+  const ORDER_ENDPOINT = '';
+  const OWNER_EMAIL = 'bobbydigital513@gmail.com';
+
+  const form = document.getElementById('orderForm');
+  const status = document.getElementById('formStatus');
+  const submit = document.getElementById('orderSubmit');
+  if (!form) return;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    status.className = 'form-status';
+    status.textContent = '';
+
+    if (!form.checkValidity()) {
+      status.className = 'form-status err';
+      status.textContent = 'Please fill in your name, phone and email.';
+      form.reportValidity();
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    if (!ORDER_ENDPOINT) {
+      // No endpoint configured yet — hand off to the visitor's mail client so
+      // an order is never silently lost.
+      const body = Object.entries(data).map(([k, v]) => k + ': ' + v).join('\n');
+      location.href = 'mailto:' + OWNER_EMAIL
+        + '?subject=' + encodeURIComponent('Blazer reservation — ' + data.name)
+        + '&body=' + encodeURIComponent(body);
+      status.className = 'form-status ok';
+      status.textContent = 'Opening your email app to send the reservation…';
+      return;
+    }
+
+    submit.disabled = true;
+    submit.querySelector('span').textContent = 'Sending…';
+    try {
+      const res = await fetch(ORDER_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      form.reset();
+      status.className = 'form-status ok';
+      status.textContent = 'Got it — Monique will reach out shortly. Thank you!';
+    } catch (err) {
+      status.className = 'form-status err';
+      status.innerHTML = 'That did not send. Please call <a href="tel:8599823455" style="color:var(--gold-bright)">859-982-3455</a>.';
+    } finally {
+      submit.disabled = false;
+      submit.querySelector('span').textContent = 'Send My Reservation';
+    }
+  });
+})();
 
 /* ---------- mobile menu ---------- */
 const menuBtn = document.getElementById('menuBtn');
