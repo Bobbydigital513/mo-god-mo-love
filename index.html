@@ -192,28 +192,20 @@
   .band-track span:hover{color:var(--gold-bright);}
   .band-track i{color:var(--wine-bright);font-size:14px;font-style:normal;}
 
-  /* MEANING — the embroidery writes itself */
+  /* MEANING — let the real embroidery carry it */
   .meaning{background:var(--ink-soft);border-top:1px solid var(--line-soft);
     border-bottom:1px solid var(--line-soft);}
-  .stitch-stage{position:relative;max-width:1000px;margin:0 auto;border:1px solid var(--line-soft);
-    border-radius:4px;overflow:hidden;aspect-ratio:4/3;background:#0d0b0a;}
-  .stitch-stage img{width:100%;height:100%;object-fit:cover;opacity:.5;}
-  .stitch-stage::after{content:"";position:absolute;inset:0;
-    background:radial-gradient(ellipse at 50% 55%,transparent 20%,rgba(10,9,8,.85) 80%);}
-  .stitch-words{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:0;padding:clamp(16px,4vw,44px);}
-  .stitch-words .sw{font-family:'Great Vibes',cursive;color:var(--cream);
-    font-size:clamp(28px,5.6vw,66px);line-height:1.08;white-space:nowrap;
-    text-shadow:0 2px 30px rgba(0,0,0,.9),0 0 60px rgba(200,164,100,.2);
-    -webkit-mask-image:linear-gradient(90deg,#000 0 0);mask-image:linear-gradient(90deg,#000 0 0);
-    -webkit-mask-size:0% 100%;mask-size:0% 100%;
-    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
-  .words-copy{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:1000px;
-    margin:56px auto 0;}
-  .wc{border-top:1px solid var(--line);padding-top:22px;}
-  .wc h3{font-size:17px;margin-bottom:10px;color:var(--cream);}
-  .wc h3 em{font-family:'Great Vibes',cursive;font-style:normal;color:var(--gold-bright);font-size:26px;}
-  .wc p{font-size:13.5px;color:var(--cream-dim);font-weight:300;}
+  .meaning-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5.5vw,76px);
+    align-items:center;max-width:1100px;margin:0 auto;}
+  .meaning-photo{aspect-ratio:3/4;border-radius:4px;overflow:hidden;
+    box-shadow:var(--shadow);background:#141110;}
+  .meaning-photo img{width:100%;height:100%;object-fit:cover;object-position:52% 42%;}
+  .words-copy{display:flex;flex-direction:column;gap:clamp(22px,3vw,34px);}
+  .wc{border-top:1px solid var(--line);padding-top:20px;}
+  .wc h3{font-size:16px;margin-bottom:9px;color:var(--cream);}
+  .wc h3 em{font-family:'Great Vibes',cursive;font-style:normal;color:var(--gold-bright);
+    font-size:clamp(28px,3vw,38px);line-height:1;display:block;margin-bottom:4px;}
+  .wc p{font-size:14px;color:var(--cream-dim);font-weight:300;}
 
   /* THE WALK — pinned full-bleed */
   .walk{position:relative;height:100vh;overflow:hidden;}
@@ -358,7 +350,8 @@
     .hero-grid,.story-grid{grid-template-columns:1fr;}
     .hero-visual{order:-1;max-width:420px;margin:0 auto;width:100%;}
     .story-sticky{position:static;} .story-frame{max-width:420px;margin:0 auto;}
-    .words-copy{grid-template-columns:1fr;gap:22px;}
+    .meaning-grid{grid-template-columns:1fr;}
+    .meaning-photo{max-width:420px;margin:0 auto;width:100%;}
     .products{grid-template-columns:1fr;}
     .foot-grid{grid-template-columns:1fr;}
     .field-row{grid-template-columns:1fr;gap:0;}
@@ -371,7 +364,6 @@
       transition-duration:.001ms!important;}
     .rv{opacity:1;transform:none;} .mask::after{transform:scaleY(0);} .mask img{transform:none;}
     .verse p .w,.walk-copy .line{opacity:1;} .grain{display:none;}
-    .stitch-words .sw{-webkit-mask-size:100% 100%;mask-size:100% 100%;}
   }
 </style>
 </head>
@@ -452,27 +444,23 @@
       <p class="rv" data-d="2">Stitched across the lapel and pockets — a quiet sermon you wear into every room.</p>
     </div>
 
-    <div class="stitch-stage rv" id="stitchStage">
-      <img src="assets/img/detail-fabric.jpg" alt="Close detail of the blazer fabric">
-      <div class="stitch-words" aria-label="Product of God's Grace">
-        <div class="sw" data-stitch>Product of</div>
-        <div class="sw" data-stitch>God&rsquo;s</div>
-        <div class="sw" data-stitch>Grace</div>
+    <div class="meaning-grid">
+      <div class="meaning-photo mask rv">
+        <img src="assets/img/detail-lapel.jpg" alt="The words Product of and God's embroidered on the blazer lapel and pocket">
       </div>
-    </div>
-
-    <div class="words-copy">
-      <div class="wc rv" data-d="1">
-        <h3><em>Product of</em></h3>
-        <p>A declaration of who you are — intentionally and wonderfully made, on purpose, by design.</p>
-      </div>
-      <div class="wc rv" data-d="2">
-        <h3><em>God&rsquo;s</em></h3>
-        <p>Not by luck or by chance. He is the source of your life, your strength, and every good thing you carry.</p>
-      </div>
-      <div class="wc rv" data-d="3">
-        <h3><em>Grace</em></h3>
-        <p>Unmerited. Undeserved. Unstoppable. Grace covers your past, empowers your present, and secures your future.</p>
+      <div class="words-copy">
+        <div class="wc rv" data-d="1">
+          <h3><em>Product of</em></h3>
+          <p>A declaration of who you are — intentionally and wonderfully made, on purpose, by design.</p>
+        </div>
+        <div class="wc rv" data-d="2">
+          <h3><em>God&rsquo;s</em></h3>
+          <p>Not by luck or by chance. He is the source of your life, your strength, and every good thing you carry.</p>
+        </div>
+        <div class="wc rv" data-d="3">
+          <h3><em>Grace</em></h3>
+          <p>Unmerited. Undeserved. Unstoppable. Grace covers your past, empowers your present, and secures your future.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -795,47 +783,6 @@ window.addEventListener('DOMContentLoaded', () => {
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
-
-  /* ---------- the embroidery writes itself ---------- */
-  (function stitch(){
-    const words = [...document.querySelectorAll('[data-stitch]')];
-    if (!words.length) return;
-    if (reduced) { words.forEach(w => w.style.maskSize = w.style.webkitMaskSize = '100% 100%'); return; }
-
-    if (hasGSAP) {
-      // scrub the mask width with scroll so the script draws on as you move
-      words.forEach((w, i) => {
-        gsap.fromTo(w,
-          { webkitMaskSize: '0% 100%', maskSize: '0% 100%' },
-          {
-            webkitMaskSize: '100% 100%', maskSize: '100% 100%', ease: 'none',
-            scrollTrigger: {
-              trigger: '#stitchStage',
-              start: 'top 72%',
-              end: 'bottom 62%',
-              scrub: 0.6,
-              // each word gets its own slice of the scroll range
-              onUpdate: self => {
-                const span = 1 / words.length;
-                const local = Math.min(1, Math.max(0, (self.progress - i * span) / span));
-                w.style.webkitMaskSize = w.style.maskSize = (local * 100) + '% 100%';
-              },
-            },
-          });
-      });
-    } else {
-      const sio = new IntersectionObserver(es => es.forEach(e => {
-        if (!e.isIntersecting) return;
-        words.forEach((w, i) => {
-          w.style.transition = 'mask-size 1.1s var(--ease), -webkit-mask-size 1.1s var(--ease)';
-          w.style.transitionDelay = (i * 0.45) + 's';
-          w.style.webkitMaskSize = w.style.maskSize = '100% 100%';
-        });
-        sio.disconnect();
-      }), { threshold: 0.35 });
-      sio.observe(document.getElementById('stitchStage'));
-    }
-  })();
 
   /* ---------- the walk: pin and light each line ---------- */
   (function walk(){
