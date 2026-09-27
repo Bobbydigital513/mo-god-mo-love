@@ -74,6 +74,16 @@ properly.
 No payment is taken on the page. Monique confirms each order, then settles by
 Cash, Zelle, CashApp, PayPal or Apple Pay.
 
+## Before launch — REMOVE THESE
+
+The preview is deliberately hidden from search engines so it cannot outrank
+`mogodmolove.shop` for the brand's own name. The day the real domain goes
+live, do both of these or the real site will stay invisible to Google:
+
+1. Delete the `<meta name="robots" content="noindex, nofollow">` line in
+   `index.html` (it sits just under the `theme-color` meta).
+2. Delete `robots.txt`.
+
 ## Deploying
 
 Static hosting works as-is (GitHub Pages, Netlify, Cloudflare Pages).

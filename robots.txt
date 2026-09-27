@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# TEMPORARY. Delete this file when mogodmolove.shop goes live.
