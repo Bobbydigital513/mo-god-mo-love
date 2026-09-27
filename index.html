@@ -324,6 +324,7 @@
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .order-note{font-size:12.5px;color:var(--cream-faint);margin-top:18px;text-align:center;line-height:1.6;}
   .order-note b{color:var(--cream-dim);font-weight:500;}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
   .form-status{margin-top:16px;text-align:center;font-size:14px;min-height:22px;}
   .form-status.ok{color:var(--gold-bright);} .form-status.err{color:#e08a9a;}
   button.btn-block{border:none;cursor:pointer;font-family:'Inter',sans-serif;}
@@ -623,6 +624,10 @@
           <label for="f-notes">Anything else?</label>
           <textarea id="f-notes" name="notes" placeholder="Occasion, timing, questions about fit…"></textarea>
         </div>
+        <div class="hp" aria-hidden="true">
+          <label for="f-company">Company</label>
+          <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off">
+        </div>
         <button type="submit" class="btn-block solid" id="orderSubmit"><span>Send My Reservation</span></button>
         <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
       </form>
@@ -920,45 +925,92 @@ window.addEventListener('DOMContentLoaded', () => {
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
   addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
 
-  /* ---------- order form ---------- */
+  /* ---------- order form ----------
+     Set ORDER_ENDPOINT to start delivering reservations.
+
+     ORDER_MODE:
+       'auto'      pick by URL shape (default)
+       'formspree' POST FormData, read the JSON reply, report real success
+       'webhook'   POST JSON. Most GoHighLevel inbound webhooks send no CORS
+                   headers, so the browser refuses to read the reply even
+                   though the data arrives. We send no-cors and report it as
+                   sent, because we cannot know otherwise. Send yourself a
+                   test after wiring it up and confirm it lands.
+
+     With no endpoint set, the form opens a pre-filled email instead, so an
+     order is never silently dropped.                                      */
   (function orderForm(){
-    const ORDER_ENDPOINT = '';                      // Formspree / GHL webhook URL
-    const OWNER_EMAIL = 'lovelacemonique@icloud.com';
-    const form = document.getElementById('orderForm');
+    const ORDER_ENDPOINT = '';
+    const ORDER_MODE     = 'auto';
+    const OWNER_EMAIL    = 'lovelacemonique@icloud.com';
+
+    const form   = document.getElementById('orderForm');
     const status = document.getElementById('formStatus');
     const submit = document.getElementById('orderSubmit');
+    const label  = submit.querySelector('span');
+    if (!form) return;
+
+    const mode = () => ORDER_MODE !== 'auto' ? ORDER_MODE
+      : /formspree\.io|basin\.com|web3forms|formsubmit/i.test(ORDER_ENDPOINT) ? 'formspree' : 'webhook';
+
+    const say = (kind, html) => {
+      status.className = 'form-status' + (kind ? ' ' + kind : '');
+      status.innerHTML = html;
+    };
+    const CALL = 'Please call <a href="tel:8599823455" style="color:var(--gold-bright)">859-982-3455</a>.';
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      status.className = 'form-status'; status.textContent = '';
+      say('', '');
+
       if (!form.checkValidity()) {
-        status.className = 'form-status err';
-        status.textContent = 'Please fill in your name, phone and email.';
-        form.reportValidity(); return;
+        say('err', 'Please fill in your name, phone and email.');
+        form.reportValidity();
+        return;
       }
+
       const data = Object.fromEntries(new FormData(form).entries());
+
+      // Honeypot: a real visitor cannot see this field, so anything in it is a
+      // bot. Pretend it worked rather than telling the bot it was caught.
+      if (data.company) { form.reset(); say('ok', 'Got it — Monique will reach out shortly. Thank you!'); return; }
+      delete data.company;
+
+      data.source = 'mogodmolove website';
+      data.submittedAt = new Date().toISOString();
 
       if (!ORDER_ENDPOINT) {
         const body = Object.entries(data).map(([k, v]) => k + ': ' + v).join('\n');
         location.href = 'mailto:' + OWNER_EMAIL
           + '?subject=' + encodeURIComponent('Blazer reservation — ' + data.name)
           + '&body=' + encodeURIComponent(body);
-        status.className = 'form-status ok';
-        status.textContent = 'Opening your email app to send the reservation…';
+        say('ok', 'Opening your email app to send the reservation…');
         return;
       }
-      submit.disabled = true; submit.querySelector('span').textContent = 'Sending…';
+
+      submit.disabled = true; label.textContent = 'Sending…';
       try {
-        const res = await fetch(ORDER_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
+        if (mode() === 'formspree') {
+          const res = await fetch(ORDER_ENDPOINT, {
+            method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form),
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+        } else {
+          // No Content-Type header here on purpose. Under no-cors the browser
+          // only allows text/plain, form-urlencoded or multipart, and silently
+          // rewrites anything else — so the request arrives as text/plain
+          // whatever we set. The body is still valid JSON and GHL, Zapier and
+          // Make all parse it. Verified by capturing a real POST.
+          await fetch(ORDER_ENDPOINT, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+          // Opaque response: a network failure still throws, but an HTTP error
+          // status is invisible, so a test submission is the only real proof.
+        }
         form.reset();
-        status.className = 'form-status ok';
-        status.textContent = 'Got it — Monique will reach out shortly. Thank you!';
+        say('ok', 'Got it — Monique will reach out shortly. Thank you!');
       } catch (err) {
-        status.className = 'form-status err';
-        status.innerHTML = 'That did not send. Please call <a href="tel:8599823455" style="color:var(--gold-bright)">859-982-3455</a>.';
+        say('err', 'That did not send. ' + CALL);
       } finally {
-        submit.disabled = false; submit.querySelector('span').textContent = 'Send My Reservation';
+        submit.disabled = false; label.textContent = 'Send My Reservation';
       }
     });
   })();

@@ -65,11 +65,30 @@ wide before committing.
 
 ## Taking orders
 
-The reservation form posts to `ORDER_ENDPOINT` in the script block. It is
-empty right now, so the form falls back to opening a pre-filled email to
-lovelacemonique@icloud.com — an order is never silently dropped. Set it to a
-Formspree URL or a GoHighLevel form webhook to have submissions delivered
-properly.
+Set `ORDER_ENDPOINT` in the script block at the bottom of `index.html`. Until
+it has a value the form opens a pre-filled email to
+lovelacemonique@icloud.com, so an order is never silently dropped.
+
+Two delivery modes, picked automatically from the URL:
+
+**GoHighLevel (or Zapier / Make) webhook** — posts JSON. These endpoints
+usually send no CORS headers, so the browser will not let the page read the
+reply. The request goes through, but the page cannot tell success from
+failure and always reports success. **Send one real test reservation and
+confirm it lands in the CRM before trusting it.**
+
+Note the browser forces the request to `text/plain` under `no-cors` no matter
+what header is set. The body is still valid JSON and GHL parses it fine.
+
+**Formspree / Basin / Web3Forms** — posts form data, reads the reply, and
+reports real success or failure. Use this if you want the page to actually
+know whether it worked.
+
+Fields sent: `name`, `phone`, `email`, `piece`, `size`, `notes`, plus
+`source` and `submittedAt`.
+
+A hidden `company` honeypot field catches bots. If it is filled the page shows
+the normal thank-you and sends nothing, so the bot gets no signal.
 
 No payment is taken on the page. Monique confirms each order, then settles by
 Cash, Zelle, CashApp, PayPal or Apple Pay.
