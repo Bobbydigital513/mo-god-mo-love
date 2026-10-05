@@ -102,6 +102,9 @@ live, do both of these or the real site will stay invisible to Google:
 1. Delete the `<meta name="robots" content="noindex, nofollow">` line in
    `index.html` (it sits just under the `theme-color` meta).
 2. Delete `robots.txt`.
+3. Repoint `og:image` at the real domain. It is currently an absolute
+   github.io URL, because Facebook and iMessage will not resolve a relative
+   one — and a share card with a broken image is most of the click lost.
 
 ## Deploying
 
