@@ -154,6 +154,8 @@
     background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
     animation:shine 7s linear infinite;}
   @keyframes shine{to{background-position:-220% 0}}
+  .hero .chosen{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-bright);
+    font-size:clamp(17px,2vw,22px);margin-bottom:18px;}
   .hero .lead{font-size:clamp(15.5px,1.6vw,17.5px);color:var(--cream-dim);max-width:480px;
     margin-bottom:34px;font-weight:300;}
   .hero-ctas{display:flex;gap:18px;flex-wrap:wrap;align-items:center;}
@@ -169,17 +171,18 @@
   .btn-ghost{color:var(--cream);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
     padding:16px 4px;border-bottom:1px solid var(--line);transition:border-color .35s,color .35s;}
   .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
-  .hero-visual{position:relative;aspect-ratio:3/4;border-radius:4px;box-shadow:var(--shadow);
+  .hero-visual{position:relative;aspect-ratio:1/1;border-radius:4px;box-shadow:var(--shadow);
     background:linear-gradient(160deg,#1a1512,#0a0908 70%);}
   .hero-visual .shot{position:absolute;inset:0;border-radius:4px;}
   .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:50% 28%;border-radius:4px;}
   .hero-visual .edge{position:absolute;inset:14px;border:1px solid rgba(246,237,223,.16);
     border-radius:2px;z-index:4;pointer-events:none;}
   .hero-tag{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:26px 24px;
-    display:flex;justify-content:space-between;align-items:flex-end;
+    display:flex;justify-content:flex-start;align-items:flex-end;
     background:linear-gradient(0deg,rgba(10,9,8,.93),transparent);border-radius:0 0 4px 4px;}
-  .hero-tag .name{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-dim);}
-  .hero-tag .price{font-family:'Fraunces',serif;font-size:25px;color:var(--gold-bright);}
+  .hero-tag .cap{font-family:'Fraunces',serif;font-style:italic;color:var(--cream);
+    font-size:clamp(13.5px,1.4vw,16px);line-height:1.4;max-width:34ch;
+    text-shadow:0 2px 16px rgba(0,0,0,.9);}
   .seal{position:absolute;top:-22px;left:-18px;width:98px;height:98px;z-index:6;display:flex;
     align-items:center;justify-content:center;border-radius:50%;background:rgba(10,9,8,.92);
     border:1px solid var(--gold);backdrop-filter:blur(6px);font-family:'Fraunces',serif;
@@ -270,8 +273,15 @@
   .btn-block.outline:hover{color:var(--ink);} .btn-block.outline:hover::before{transform:translateY(0);}
 
   /* LOOKBOOK — horizontal scroll */
-  .look-track{display:flex;gap:22px;padding:0 var(--gutter);will-change:transform;}
-  .look{flex:0 0 auto;width:clamp(230px,26vw,330px);aspect-ratio:3/4;border-radius:4px;
+  /* Scrolls by itself everywhere. When GSAP takes over the desktop pin it
+     adds .pinned and hands scrolling to the ScrollTrigger instead. Without
+     this the track was clipped with no way to move it on a phone. */
+  .look-track{display:flex;gap:22px;padding:0 var(--gutter) 14px;will-change:transform;
+    overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .look-track::-webkit-scrollbar{display:none;}
+  .look-track.pinned{overflow:visible;scroll-snap-type:none;}
+  .look{flex:0 0 auto;scroll-snap-align:center;width:clamp(230px,26vw,330px);aspect-ratio:3/4;border-radius:4px;
     overflow:hidden;border:1px solid var(--line-soft);position:relative;background:#141110;}
   .look img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease);}
   .look:hover img{transform:scale(1.06);}
@@ -292,6 +302,64 @@
   .spin-stage img.on{opacity:1;}
   .spin-hint{text-align:center;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
     color:var(--cream-faint);margin-top:24px;}
+
+  /* SWATCHES / PRODUCT NOTES / BADGE */
+  .swatches{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .swatches .sw{width:22px;height:22px;border-radius:50%;border:1px solid rgba(246,237,223,.35);}
+  .swatches .sw.black{background:#121212;}
+  .swatches .sw.maroon{background:var(--maroon);}
+  .swatches .lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint);}
+  .pnote{font-size:12px;color:var(--cream-dim);margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;}
+  .pnote::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:7px;}
+  .pnotes{margin-bottom:20px;}
+  .owned{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);
+    border-radius:30px;padding:9px 18px;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold-bright);}
+  .owned::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);}
+
+  /* SCRIPTURE BLOCKS */
+  .scripture{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}
+  .verse-block{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);
+    align-items:center;max-width:1100px;margin:0 auto;}
+  .verse-block + .verse-block{margin-top:clamp(56px,8vw,110px);}
+  .verse-block.flip .vb-photo{order:2;}
+  .vb-photo{aspect-ratio:3/4;border-radius:4px;overflow:hidden;box-shadow:var(--shadow);background:#141110;}
+  .vb-photo img{width:100%;height:100%;object-fit:cover;}
+  .vb-copy h3{font-size:clamp(23px,2.8vw,33px);margin-bottom:14px;}
+  .vb-lead{color:var(--gold-bright);font-family:'Fraunces',serif;font-style:italic;
+    font-size:clamp(16px,1.8vw,20px);margin-bottom:22px;}
+  .vb-ref{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .vb-quote{border-left:2px solid var(--gold);padding-left:22px;margin-bottom:22px;
+    font-family:'Fraunces',serif;font-style:italic;color:var(--cream);
+    font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.55;}
+  .vb-copy p{color:var(--cream-dim);font-weight:300;font-size:14.5px;}
+
+  /* THANK YOU */
+  .thanks{background:var(--ink-soft);border-top:1px solid var(--line-soft);
+    border-bottom:1px solid var(--line-soft);}
+  .thanks-card{max-width:760px;margin:0 auto;}
+  .thanks-card p{color:var(--cream-dim);font-weight:300;margin-bottom:17px;font-size:15px;}
+  .thanks-card p.memory{color:var(--cream);}
+  .thanks-sign{font-family:'Great Vibes',cursive;font-size:clamp(30px,4vw,44px);
+    color:var(--gold-bright);margin-top:26px;line-height:1.1;}
+  .thanks-sign small{display:block;font-family:'Inter',sans-serif;font-size:10.5px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint);margin-bottom:6px;}
+
+  /* DONATIONS */
+  .donate-card{max-width:720px;margin:0 auto;text-align:center;border:1px solid var(--line);
+    border-radius:4px;padding:clamp(28px,4vw,48px);
+    background:radial-gradient(ellipse at top,rgba(107,27,45,.22),transparent 70%),var(--ink-panel);}
+  .donate-card h2{font-size:clamp(26px,3.2vw,38px);margin-bottom:16px;}
+  .donate-card p{color:var(--cream-dim);font-weight:300;margin-bottom:26px;}
+
+  /* STORY BACKGROUND — her portrait behind the text */
+  .story{position:relative;overflow:hidden;}
+  .story-bg{position:absolute;inset:0;z-index:0;}
+  .story-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;
+    opacity:.16;filter:grayscale(.25);}
+  .story::before{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,var(--ink),rgba(10,9,8,.84) 32%,rgba(10,9,8,.92) 70%,var(--ink));}
+  .story > .wrap{position:relative;z-index:2;}
 
   /* VERSE */
   .verse{position:relative;padding:clamp(80px,12vw,150px) var(--gutter);text-align:center;overflow:hidden;
@@ -358,6 +426,9 @@
     .meaning-grid{grid-template-columns:1fr;}
     .meaning-photo{max-width:420px;margin:0 auto;width:100%;}
     .products{grid-template-columns:1fr;}
+    .verse-block{grid-template-columns:1fr;}
+    .verse-block.flip .vb-photo{order:0;}
+    .vb-photo{max-width:420px;margin:0 auto;width:100%;}
     .foot-grid{grid-template-columns:1fr;}
     .field-row{grid-template-columns:1fr;gap:0;}
     .walk{height:88vh;}
@@ -392,7 +463,7 @@
       <span>Mo God Mo Love</span>
     </a>
     <div class="navlinks">
-      <a href="#meaning">The Meaning</a>
+      <a href="#message">The Message</a>
       <a href="#shop">Shop</a>
       <a href="#lookbook">Lookbook</a>
       <a href="#story">Her Story</a>
@@ -406,7 +477,7 @@
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#meaning">The Meaning</a>
+  <a href="#message">The Message</a>
   <a href="#shop">Shop</a>
   <a href="#lookbook">Lookbook</a>
   <a href="#story">Her Story</a>
@@ -419,21 +490,21 @@
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-grid">
     <div>
-      <div class="eyebrow rv">Faith-Inspired Fashion</div>
-      <h1 class="split" id="heroTitle" data-line1="Wear the message." data-line2="Carry <em>the light.</em>"></h1>
-      <p class="lead rv" data-d="2">Every piece is stitched with a reminder of who you are before you say a single word. Made in small batches by Monique Lovelace, for women who walk boldly in their God-given purpose.</p>
+      <div class="eyebrow rv">Hope-Inspired Fashion</div>
+      <h1 class="split" id="heroTitle" data-line1="Wear the message of hope." data-line2="Be <em>the reminder.</em>"></h1>
+      <p class="chosen rv" data-d="1">You are chosen. You are worthy. You are loved.</p>
+      <p class="lead rv" data-d="2">Created to uplift, encourage, and remind women of their identity, their worth, and their God-given purpose. Made in small batches by Monique Lovelace.</p>
       <div class="hero-ctas rv" data-d="3">
-        <a href="#shop" class="btn magnetic"><span>Shop The Collection</span></a>
+        <a href="#shop" class="btn magnetic"><span>Wear The Message</span></a>
         <a href="#story" class="btn-ghost">Read Her Story</a>
       </div>
     </div>
     <div class="hero-visual rv" data-d="2">
-      <div class="seal">Shine<br>wherever<br>you go</div>
-      <div class="shot mask"><img src="assets/img/editorial-lobby.jpg" alt="Monique Lovelace wearing the Product of God's Grace blazer"></div>
+      <div class="seal">Be<br>the<br>reminder</div>
+      <div class="shot mask"><img src="assets/img/encouragement.jpg" alt="Two women walking together, one wearing the Product of God's Grace blazer"></div>
       <div class="edge"></div>
       <div class="hero-tag">
-        <div class="name">Product of God&rsquo;s Grace</div>
-        <div class="price">$68</div>
+        <div class="cap">Sometimes the message you wear is the encouragement someone needs.</div>
       </div>
     </div>
   </div>
@@ -482,19 +553,53 @@
 </div>
 
 <section class="story" id="story">
+  <div class="story-bg"><img src="assets/img/monique-portrait.jpg" alt="" loading="lazy"></div>
   <div class="wrap story-grid">
     <div class="story-sticky">
       <div class="story-frame mask"><img src="assets/img/fearfully-studio-b.jpg" alt="Monique Lovelace wearing the I Am Fearfully and Wonderfully Made blazer in maroon"></div>
     </div>
     <div class="story-copy">
-      <div class="eyebrow rv">Her Story</div>
-      <h2 class="rv" data-d="1">Mo God. Mo Love. Mo Purpose.</h2>
-      <p class="rv" data-d="2">Mo God Mo Love was born from my journey through pain, recovery, and purpose. I struggled with abandonment, depression, addiction, and feeling comfortable in my own skin.</p>
-      <p class="rv" data-d="2">Recovery gave me purpose and brought people into my life who love and believe in me. It taught me to look within and helped me find a God of my own understanding.</p>
-      <div class="pull rv" data-d="3">&ldquo;As women, we often pour into others while forgetting the beauty, strength, and purpose God has placed within us.&rdquo;</div>
-      <p class="rv" data-d="3">This brand is more than clothing. It is a movement of faith and inspiration expressed through style. I believe modesty can be fashionable, elegance can be powerful, and spirituality can be expressed through what we wear.</p>
-      <p class="rv" data-d="4">The name means a way of life: the more of God we embrace, the more love we can give — to ourselves, our families, our communities, and the world around us.</p>
-      <div class="attribution rv" data-d="4">— Monique Lovelace, Founder</div>
+      <div class="eyebrow rv">My Story</div>
+      <h2 class="rv" data-d="1">I know what it feels like to not know my identity or my worth.</h2>
+      <p class="rv" data-d="2">For much of my life, I never felt good enough. I felt like I was a mistake and that God had forgotten me. I battled abandonment, depression, addiction, and struggled with being comfortable in my own skin.</p>
+      <p class="rv" data-d="2">Recovery saved my life. It surrounds me with amazing people who love and believe in me. It&rsquo;s teaching me to look within and has given me a God of my own understanding. Recovery created purpose in my life and helped shape the woman I am today.</p>
+      <p class="rv" data-d="3">Through that journey, I began discovering my identity, recognizing my worth, and understanding that the things I had been through didn&rsquo;t have to define me&mdash;they could become part of my purpose.</p>
+      <p class="rv" data-d="3">And through my pain, my recovery, and my purpose, Mo God Mo Love was born.</p>
+      <div class="pull rv" data-d="3">&ldquo;I created this brand to give other women the reminders I once needed myself: You are chosen. You are worthy. You are loved.&rdquo;</div>
+      <p class="rv" data-d="4">Every piece carries a message of hope&mdash;not only for the woman wearing it, but for the woman who may see her and need that reminder too. Because sometimes you may be wearing the very message another woman needs to see.</p>
+      <p class="rv" data-d="4"><em style="color:var(--gold-bright);font-style:italic;">Wear the message of hope. Be the reminder.</em></p>
+      <div class="attribution rv" data-d="4">&mdash; Monique Lovelace, Founder</div>
+    </div>
+  </div>
+</section>
+
+<section class="scripture" id="message">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow rv">The Message You Wear</div>
+      <h2 class="rv" data-d="1">A scripture behind every piece.</h2>
+    </div>
+
+    <div class="verse-block">
+      <div class="vb-photo mask rv"><img src="assets/img/grace-grey-studio.jpg" alt="The Product of God's Grace blazer in black" loading="lazy"></div>
+      <div class="vb-copy">
+        <h3 class="rv" data-d="1">Product of God&rsquo;s Grace</h3>
+        <div class="vb-lead rv" data-d="1">More than a blazer. A powerful reflection of God&rsquo;s grace.</div>
+        <div class="vb-ref rv" data-d="2">1 Corinthians 15:10 (KJV)</div>
+        <div class="vb-quote rv" data-d="2">&ldquo;But by the grace of God I am what I am: and his grace which was bestowed upon me was not in vain; but I laboured more abundantly than they all: yet not I, but the grace of God which was with me.&rdquo;</div>
+        <p class="rv" data-d="3">&ldquo;Product of God&rsquo;s Grace&rdquo; is a reminder that your past does not define your worth. Through every struggle and every new beginning, His grace is part of your story.</p>
+      </div>
+    </div>
+
+    <div class="verse-block flip">
+      <div class="vb-photo mask rv"><img src="assets/img/fearfully-studio-a.jpg" alt="The I Am Fearfully and Wonderfully Made blazer in maroon" loading="lazy"></div>
+      <div class="vb-copy">
+        <h3 class="rv" data-d="1">I Am Fearfully &amp; Wonderfully Made</h3>
+        <div class="vb-lead rv" data-d="1">A declaration you can wear. Psalm 139:14, stitched on the cuff.</div>
+        <div class="vb-ref rv" data-d="2">Psalm 139:14 (KJV)</div>
+        <div class="vb-quote rv" data-d="2">&ldquo;I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.&rdquo;</div>
+        <p class="rv" data-d="3">&ldquo;Fearfully&rdquo; means with awe and reverence. This verse reminds you that God made you with care and wonder&mdash;you are worthy of love, exactly as He created you.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -502,9 +607,10 @@
 <section class="shop" id="shop">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow rv">Shop The Collection</div>
+      <div class="eyebrow rv">Wear The Message Collection</div>
       <h2 class="rv" data-d="1">Two pieces. One promise.</h2>
-      <p class="rv" data-d="2">Made in small runs, made to be lived in — from the pew to the podium.</p>
+      <p class="rv" data-d="2">Made in small runs, made to be lived in &mdash; from the pew to the podium.</p>
+      <div class="rv" data-d="2" style="margin-top:22px;"><span class="owned">God&rsquo;s business &middot; Black owned</span></div>
     </div>
     <div class="products">
       <article class="card tilt rv" data-d="1">
@@ -514,9 +620,14 @@
         </div>
         <div class="card-body">
           <div class="pname">Product of God&rsquo;s Grace</div>
-          <div class="pdetail">Black only &middot; Embroidered lapel &amp; pockets</div>
+          <div class="pdetail">1 Corinthians 15:10</div>
           <div class="price">$68 <small>+ shipping</small></div>
+          <div class="swatches"><span class="sw black"></span><span class="lbl">Black only</span></div>
           <div class="sizes"><span>S</span><span>M</span><span>L</span><span>XL</span><span>2X</span></div>
+          <div class="pnotes">
+            <div class="pnote">Embroidered lapel and pockets</div>
+            <div class="pnote">Highly recommend ordering a size up</div>
+          </div>
           <a href="#order" class="btn-block solid"><span>Reserve Yours</span></a>
         </div>
       </article>
@@ -527,9 +638,14 @@
         </div>
         <div class="card-body">
           <div class="pname">I Am Fearfully &amp; Wonderfully Made</div>
-          <div class="pdetail">Maroon &amp; black &middot; Psalm 139:14 on the cuff</div>
+          <div class="pdetail">Psalm 139:14 &middot; stitched on the cuff</div>
           <div class="price">$&mdash; <small>Join the waitlist</small></div>
+          <div class="swatches"><span class="sw maroon"></span><span class="sw black"></span><span class="lbl">Maroon &amp; black</span></div>
           <div class="sizes"><span>M</span><span>L</span><span>XL</span><span>2X</span><span>3X</span></div>
+          <div class="pnotes">
+            <div class="pnote">This blazer is embroidered</div>
+            <div class="pnote">Highly recommend ordering a size up</div>
+          </div>
           <a href="#order" class="btn-block outline"><span>Join The Waitlist</span></a>
         </div>
       </article>
@@ -537,7 +653,7 @@
   </div>
 </section>
 
-<section id="lookbook" style="overflow:hidden;">
+<section id="lookbook">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow rv">The Lookbook</div>
@@ -552,6 +668,8 @@
     <figure class="look"><img src="assets/img/look-02.jpg" alt="Mo God Mo Love look" loading="lazy"><figcaption>Celebration</figcaption></figure>
     <figure class="look"><img src="assets/img/look-03.jpg" alt="Mo God Mo Love look" loading="lazy"><figcaption>Everyday</figcaption></figure>
     <figure class="look"><img src="assets/img/look-04.jpg" alt="Mo God Mo Love look" loading="lazy"><figcaption>Business</figcaption></figure>
+    <figure class="look"><img src="assets/img/grace-grey-studio.jpg" alt="The Product of God's Grace blazer styled with a grey knit set" loading="lazy"><figcaption>Styled</figcaption></figure>
+    <figure class="look"><img src="assets/img/encouragement-full.jpg" alt="Sometimes the message you wear is the encouragement someone needs" loading="lazy"><figcaption>The Reminder</figcaption></figure>
     <figure class="look"><img src="assets/img/detail-fabric.jpg" alt="Fabric and stitching detail" loading="lazy"><figcaption>The Cloth</figcaption></figure>
   </div>
   <div class="look-hint">Scroll to explore &mdash;</div>
@@ -577,6 +695,36 @@
     <div class="ref">Psalm 139:14</div>
   </div>
 </div>
+
+<section class="thanks" id="thanks">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow rv">To Those Who Helped Me Become</div>
+      <h2 class="rv" data-d="1">Pieces of my story.</h2>
+    </div>
+    <div class="thanks-card">
+      <p class="rv">Mo God Mo Love carries pieces of my story&mdash;and the love of those who have inspired me along the way.</p>
+      <p class="memory rv" data-d="1">In loving memory of my mother, <b>Cornelia Lovelace</b>; my grandmother, <b>Anna Lovelace</b>; my grandfather, <b>Memphis Lovelace</b>; and my first Narcotics Anonymous sponsor, <b>Gloria Northington</b>. Though you are in heaven, your love and the lessons you shared continue to live in my heart.</p>
+      <p class="rv" data-d="1">To my son, <b>A&rsquo;veon Gilmore</b>, my daughters, <b>Arianah Lovelace</b> and <b>Amiah Lovelace</b>, and my precious grandchildren: you inspire me to keep growing, keep believing, and build something rooted in love. You are part of the hope behind this brand.</p>
+      <p class="rv" data-d="2">To Narcotics Anonymous and my current sponsor <b>Cynthia J.</b>: thank you for giving me a place to recover, find connection, helping me discover my identity, and learn a new way to live clean. Recovery helps me discover that my story could become a source of hope for someone else.</p>
+      <p class="rv" data-d="2">To my friends and family: thank you for your love, encouragement, and belief in me. Your support has helped me keep moving forward.</p>
+      <p class="rv" data-d="3">And to all God&rsquo;s children I encounter daily: every shared story, smile, and moment of connection reminds me why this brand exists. You inspire me to share hope and remind others that they are chosen, worthy, and loved.</p>
+      <p class="rv" data-d="3">Your place in my journey is woven into the heart of Mo God Mo Love.</p>
+      <div class="thanks-sign rv" data-d="3"><small>With love and gratitude,</small>Monique</div>
+    </div>
+  </div>
+</section>
+
+<section id="donate">
+  <div class="wrap">
+    <div class="donate-card rv">
+      <div class="eyebrow" style="justify-content:center;">Donations of Hope</div>
+      <h2>Give a little hope.</h2>
+      <p>Not here to shop? You can still be part of it. Every gift helps Monique put the message in front of another woman who needs it.</p>
+      <a href="#order" class="btn magnetic"><span>Donate</span></a>
+    </div>
+  </div>
+</section>
 
 <section id="order">
   <div class="wrap">
@@ -647,7 +795,7 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="assets/img/logo-mark.png" alt="Mo God Mo Love">
-        <p>Faith-inspired fashion designed to help women feel confident, elegant, and loved. Founded by Monique Lovelace.</p>
+        <p>Hope-inspired fashion created to uplift, encourage, and remind women of their identity, their worth, and their God-given purpose. Founded by Monique Lovelace.</p>
       </div>
       <div>
         <h4>Contact</h4>
@@ -666,7 +814,7 @@
     </div>
     <div class="foot-bottom">
       <div>&copy; 2026 Mo God Mo Love. All rights reserved.</div>
-      <div class="hearts">Mo God. Mo Love. Mo Purpose.</div>
+      <div class="hearts">Mo God. Mo Love. Mo Identity.</div>
     </div>
   </div>
 </footer>
@@ -727,10 +875,10 @@ window.addEventListener('DOMContentLoaded', () => {
     el.innerHTML = html + sep + html;     // duplicated so the loop is seamless
   };
   fill(document.getElementById('tickerTrack'), [
-    'Wear the message and carry the <b>light</b>',
+    'Wear the message of <b>hope</b>. Be the reminder',
+    'You are chosen. You are worthy. You are loved',
     'Product of God&rsquo;s Grace — in stock',
-    'Sizes S &ndash; 3X',
-    'Made in small batches',
+    'God&rsquo;s business &middot; <b>Black owned</b>',
   ], '<span class="dot">&#10022;</span>');
   fill(document.getElementById('bandTrack'),
     ['Sunday Service','Weddings','Conferences','Brunch','Family Gatherings','Business Meetings','Celebrations'],
@@ -825,6 +973,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!track || !hasGSAP || reduced || innerWidth < 860) return;
     const distance = () => track.scrollWidth - innerWidth + 60;
     if (distance() <= 0) return;
+    track.classList.add('pinned');   // CSS then drops the native overflow scroll
     gsap.to(track, {
       x: () => -distance(), ease: 'none',
       scrollTrigger: {
