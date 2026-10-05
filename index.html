@@ -72,10 +72,11 @@
   .ticker{background:linear-gradient(90deg,var(--wine),var(--wine-bright),var(--wine));
     overflow:hidden;white-space:nowrap;font-size:11px;letter-spacing:.2em;
     text-transform:uppercase;font-weight:500;padding:10px 0;position:relative;z-index:60;}
-  .ticker-track{display:inline-flex;gap:50px;animation:roll 36s linear infinite;padding-right:50px;}
+  .ticker-track{display:flex;width:max-content;gap:50px;animation:roll 36s linear infinite;
+    padding-right:50px;will-change:transform;backface-visibility:hidden;}
   .ticker:hover .ticker-track{animation-play-state:paused;}
   .ticker b{color:var(--gold-pale);} .ticker .dot{color:var(--gold);}
-  @keyframes roll{to{transform:translateX(-50%)}}
+  @keyframes roll{to{transform:translate3d(-50%,0,0)}}
 
   /* NAV */
   header{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.7);
@@ -194,7 +195,8 @@
   /* BAND */
   .band{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
     background:var(--ink-soft);overflow:hidden;padding:22px 0;white-space:nowrap;}
-  .band-track{display:inline-flex;gap:40px;align-items:center;animation:roll 44s linear infinite;padding-right:40px;}
+  .band-track{display:flex;width:max-content;gap:40px;align-items:center;
+    animation:roll 44s linear infinite;padding-right:40px;will-change:transform;backface-visibility:hidden;}
   .band-track span{font-family:'Fraunces',serif;font-size:clamp(18px,2.3vw,29px);
     color:var(--cream-faint);font-style:italic;transition:color .4s;}
   .band-track span:hover{color:var(--gold-bright);}
@@ -432,7 +434,12 @@
     .vb-photo{max-width:420px;margin:0 auto;width:100%;}
     .foot-grid{grid-template-columns:1fr;}
     .field-row{grid-template-columns:1fr;gap:0;}
-    .walk{height:88vh;}
+    .walk{height:auto;background:var(--ink);}
+    .walk-bg{position:relative;inset:auto;}
+    .walk-bg img{height:auto;aspect-ratio:3/2;object-position:50% 30%;}
+    .walk::before{display:none;}
+    .walk-copy{position:relative;height:auto;padding:30px var(--gutter) 4px;justify-content:flex-start;}
+    .walk-copy .line{max-width:none;font-size:clamp(19px,5.4vw,26px);margin-bottom:14px;}
     .seal{width:78px;height:78px;font-size:10.5px;top:-14px;left:-10px;}
   }
 
@@ -946,7 +953,8 @@ window.addEventListener('DOMContentLoaded', () => {
   (function walk(){
     const lines = [...document.querySelectorAll('[data-walk]')];
     if (!lines.length) return;
-    if (reduced || !hasGSAP) {
+    const usePin = hasGSAP && !reduced && innerWidth >= 940;
+    if (!usePin) {
       const wio = new IntersectionObserver(es => es.forEach(e => {
         if (!e.isIntersecting) return;
         lines.forEach((l, i) => setTimeout(() => l.classList.add('lit'), i * 420));
