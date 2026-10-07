@@ -156,6 +156,7 @@
     background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
     animation:shine 7s linear infinite;}
   @keyframes shine{to{background-position:-220% 0}}
+  .hero-logo{width:clamp(140px,15vw,200px);height:auto;margin-bottom:20px;}
   .hero .chosen{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-bright);
     font-size:clamp(17px,2vw,22px);margin-bottom:18px;}
   .hero .lead{font-size:clamp(15.5px,1.6vw,17.5px);color:var(--cream-dim);max-width:480px;
@@ -216,19 +217,6 @@
   .wc h3 em{font-family:'Great Vibes',cursive;font-style:normal;color:var(--gold-bright);
     font-size:clamp(28px,3vw,38px);line-height:1;display:block;margin-bottom:4px;}
   .wc p{font-size:14px;color:var(--cream-dim);font-weight:300;}
-
-  /* THE WALK — pinned full-bleed */
-  .walk{position:relative;height:100vh;overflow:hidden;}
-  .walk-bg{position:absolute;inset:0;}
-  .walk-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;}
-  .walk::before{content:"";position:absolute;inset:0;z-index:1;
-    background:linear-gradient(90deg,rgba(10,9,8,.9),rgba(10,9,8,.45) 55%,rgba(10,9,8,.75));}
-  .walk-copy{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
-    justify-content:center;max-width:1240px;margin:0 auto;padding:0 var(--gutter);}
-  .walk-copy .line{font-family:'Fraunces',serif;font-size:clamp(22px,3.6vw,46px);
-    line-height:1.25;max-width:16ch;margin-bottom:10px;opacity:.18;transition:opacity .6s var(--ease);}
-  .walk-copy .line.lit{opacity:1;}
-  .walk-copy .line b{color:var(--gold-bright);font-weight:500;font-style:italic;}
 
   /* STORY */
   .story-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(34px,6vw,80px);align-items:start;}
@@ -366,20 +354,6 @@
     background:linear-gradient(180deg,var(--ink),rgba(10,9,8,.84) 32%,rgba(10,9,8,.92) 70%,var(--ink));}
   .story > .wrap{position:relative;z-index:2;}
 
-  /* VERSE */
-  .verse{position:relative;padding:clamp(80px,12vw,150px) var(--gutter);text-align:center;overflow:hidden;
-    border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}
-  .verse-bg{position:absolute;inset:-10% 0;z-index:0;will-change:transform;}
-  .verse-bg img{width:100%;height:100%;object-fit:cover;opacity:.18;filter:grayscale(.4);}
-  .verse::before{content:"";position:absolute;inset:0;z-index:1;
-    background:radial-gradient(ellipse at center,rgba(107,27,45,.36),var(--ink) 72%);}
-  .verse-inner{position:relative;z-index:2;}
-  .verse p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(22px,3.3vw,42px);
-    max-width:860px;margin:0 auto 22px;line-height:1.32;}
-  .verse p .w{display:inline-block;opacity:.15;transition:opacity .5s var(--ease);}
-  .verse p .w.lit{opacity:1;}
-  .verse .ref{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
-
   /* ORDER */
   .order-card{max-width:720px;margin:0 auto;background:var(--ink-panel);border:1px solid var(--line-soft);
     border-radius:4px;padding:clamp(26px,4vw,46px);box-shadow:var(--shadow);}
@@ -436,12 +410,6 @@
     .vb-photo{max-width:420px;margin:0 auto;width:100%;}
     .foot-grid{grid-template-columns:1fr;}
     .field-row{grid-template-columns:1fr;gap:0;}
-    .walk{height:auto;background:var(--ink);}
-    .walk-bg{position:relative;inset:auto;}
-    .walk-bg img{height:auto;aspect-ratio:3/2;object-position:50% 30%;}
-    .walk::before{display:none;}
-    .walk-copy{position:relative;height:auto;padding:30px var(--gutter) 4px;justify-content:flex-start;}
-    .walk-copy .line{max-width:none;font-size:clamp(19px,5.4vw,26px);margin-bottom:14px;}
     .seal{width:78px;height:78px;font-size:10.5px;top:-14px;left:-10px;}
   }
 
@@ -475,7 +443,7 @@
     <div class="navlinks">
       <a href="#message">The Message</a>
       <a href="#shop">Shop</a>
-      <a href="#lookbook">Lookbook</a>
+      <a href="#lookbook">Family Wear</a>
       <a href="#story">Her Story</a>
       <a href="#order">Order</a>
     </div>
@@ -489,7 +457,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#message">The Message</a>
   <a href="#shop">Shop</a>
-  <a href="#lookbook">Lookbook</a>
+  <a href="#lookbook">Family Wear</a>
   <a href="#story">Her Story</a>
   <a href="#order">Order</a>
 </div>
@@ -500,6 +468,7 @@
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-grid">
     <div>
+      <img class="hero-logo rv" src="assets/img/logo-mark.png" alt="Mo God Mo Love" width="210" height="315">
       <div class="eyebrow rv">Hope-Inspired Fashion</div>
       <h1 class="split" id="heroTitle" data-line1="Wear the message of hope." data-line2="Be <em>the reminder.</em>"></h1>
       <p class="chosen rv" data-d="1">You are chosen. You are worthy. You are loved.</p>
@@ -521,16 +490,6 @@
 </section>
 
 <div class="band" aria-hidden="true"><div class="band-track" id="bandTrack"></div></div>
-<div class="walk" id="walk">
-  <div class="walk-bg"><img src="assets/img/hero-walk.jpg" alt="Three women and a child walking together in the I Am Fearfully and Wonderfully Made blazers"></div>
-  <div class="walk-copy">
-    <div class="line" data-walk>For much of my life, I felt I wasn&rsquo;t good enough.</div>
-    <div class="line" data-walk>That I was a mistake, and that God had forgotten me.</div>
-    <div class="line" data-walk>As I write this, I am <b>12 years clean.</b></div>
-    <div class="line" data-walk>Recovery saved my life. <b>Mo God Mo Love was born.</b></div>
-  </div>
-</div>
-
 <section class="story" id="story">
   <div class="story-bg"><img src="assets/img/monique-portrait.jpg" alt="" loading="lazy"></div>
   <div class="wrap story-grid">
@@ -577,7 +536,7 @@
         <div class="vb-lead rv" data-d="1">A declaration you can wear. Psalm 139:14, stitched on the cuff.</div>
         <div class="vb-ref rv" data-d="2">Psalm 139:14 (KJV)</div>
         <div class="vb-quote rv" data-d="2">&ldquo;I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.&rdquo;</div>
-        <p class="rv" data-d="3">&ldquo;Fearfully&rdquo; means with awe and reverence. This verse reminds you that God made you with Intention. Loved by God. Beautifully made.</p>
+        <p class="rv" data-d="3">&ldquo;I Am Fearfully and Wonderfully Made&rdquo; is a reminder that you&rsquo;re not a mistake. God made you with intention, specifically chosen and made with immense love.</p>
       </div>
     </div>
   </div>
@@ -634,7 +593,7 @@
 <section id="lookbook">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow rv">The Lookbook</div>
+      <div class="eyebrow rv">Mo God Mo Love Family Wear</div>
       <h2 class="rv" data-d="1">Made for every room you walk into.</h2>
     </div>
   </div>
@@ -666,15 +625,6 @@
     <div class="spin-hint">Drag to rotate</div>
   </div>
 </section>
-
-<div class="verse">
-  <div class="verse-bg" data-parallax="0.06"><img src="assets/img/hero-walk.jpg" alt="" loading="lazy"></div>
-  <div class="verse-inner">
-    <p id="verseText">I praise you, for I am fearfully and wonderfully made.</p>
-    <div class="ref">Psalm 139:14</div>
-  </div>
-</div>
-
 <section class="thanks" id="thanks">
   <div class="wrap">
     <div class="section-head">
@@ -685,7 +635,8 @@
       <p class="rv">Mo God Mo Love carries pieces of my story&mdash;and the love of those who have inspired me along the way.</p>
       <p class="memory rv" data-d="1">In loving memory of my mother, <b>Cornelia Lovelace</b>; my grandmother, <b>Anna Lovelace</b>; my grandfather, <b>Memphis Lovelace</b>; and my first Narcotics Anonymous sponsor, <b>Gloria Northington</b>. Though you are in heaven, your love and the lessons you shared continue to live in my heart.</p>
       <p class="rv" data-d="1">To my son, <b>A&rsquo;veon Gilmore</b>, my daughters, <b>Arianah Lovelace</b> and <b>Amiah Lovelace</b>, and my precious grandchildren: you inspire me to keep growing, keep believing, and build something rooted in love. You are part of the hope behind this brand.</p>
-      <p class="rv" data-d="2">To Narcotics Anonymous and my current sponsor <b>Cynthia J.</b>: thank you for giving me a place to recover, find connection, helping me discover my identity, and learn a new way to live clean. Recovery helps me discover that my story could become a source of hope for someone else.</p>
+      <p class="rv" data-d="2">To Narcotics Anonymous and my current sponsor <b>Cynthia W.</b>: thank you for giving me a place to recover, find connection, helping me discover my identity, and learn a new way to live clean. Recovery helps me discover that my story could become a source of hope for someone else.</p>
+      <p class="rv" data-d="2">To my partner and one of my biggest supporters&mdash;<b>Derrick Bates</b>, thank you for standing beside me and believing in my dream. Your love and encouragement have meant so much as I&rsquo;ve brought Mo God Mo Love to life. I am grateful to share this journey with you, and you hold a special place in the story behind this brand.</p>
       <p class="rv" data-d="2">To my friends and family: thank you for your love, encouragement, and belief in me. Your support has helped me keep moving forward.</p>
       <p class="rv" data-d="3">And to all God&rsquo;s children I encounter daily: every shared story, smile, and moment of connection reminds me why this brand exists. You inspire me to share hope and remind others that they are chosen, worthy, and loved.</p>
       <p class="rv" data-d="3">Your place in my journey is woven into the heart of Mo God Mo Love.</p>
@@ -920,33 +871,6 @@ window.addEventListener('DOMContentLoaded', () => {
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
 
-  /* ---------- the walk: pin and light each line ---------- */
-  (function walk(){
-    const lines = [...document.querySelectorAll('[data-walk]')];
-    if (!lines.length) return;
-    const usePin = hasGSAP && !reduced && innerWidth >= 940;
-    if (!usePin) {
-      const wio = new IntersectionObserver(es => es.forEach(e => {
-        if (!e.isIntersecting) return;
-        lines.forEach((l, i) => setTimeout(() => l.classList.add('lit'), i * 420));
-        wio.disconnect();
-      }), { threshold: 0.4 });
-      wio.observe(document.getElementById('walk'));
-      return;
-    }
-    ScrollTrigger.create({
-      trigger: '#walk', start: 'top top', end: '+=180%', pin: true, scrub: 0.5,
-      onUpdate: self => {
-        const step = 1 / lines.length;
-        lines.forEach((l, i) => l.classList.toggle('lit', self.progress >= i * step * 0.92));
-      },
-    });
-    gsap.to('.walk-bg img', {
-      scale: 1.12, ease: 'none',
-      scrollTrigger: { trigger: '#walk', start: 'top top', end: '+=180%', scrub: 0.5 },
-    });
-  })();
-
   /* ---------- lookbook: horizontal scroll ---------- */
   (function lookbook(){
     const track = document.getElementById('lookTrack');
@@ -961,20 +885,6 @@ window.addEventListener('DOMContentLoaded', () => {
         pin: true, scrub: 0.6, invalidateOnRefresh: true,
       },
     });
-  })();
-
-  /* ---------- verse: light word by word ---------- */
-  (function verse(){
-    const p = document.getElementById('verseText');
-    p.innerHTML = p.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
-    const words = [...p.querySelectorAll('.w')];
-    if (reduced) { words.forEach(w => w.classList.add('lit')); return; }
-    const vio = new IntersectionObserver(es => es.forEach(e => {
-      if (!e.isIntersecting) return;
-      words.forEach((w, i) => setTimeout(() => w.classList.add('lit'), i * 60));
-      vio.disconnect();
-    }), { threshold: 0.4 });
-    vio.observe(p);
   })();
 
   /* ---------- 360 spin viewer ---------- */
