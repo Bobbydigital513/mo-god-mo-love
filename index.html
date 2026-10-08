@@ -7,7 +7,10 @@
 <meta name="description" content="Hope-inspired fashion by Monique Lovelace. Embroidered blazers made in small batches to remind women of their identity, their worth, and their God-given purpose. You are chosen. You are worthy. You are loved.">
 <meta property="og:title" content="Mo God Mo Love">
 <meta property="og:description" content="Wear the message of hope. Be the reminder. You are chosen. You are worthy. You are loved.">
-<meta property="og:image" content="https://bobbydigital513.github.io/mo-god-mo-love/assets/img/encouragement-full.jpg">
+<meta property="og:image" content="https://bobbydigital513.github.io/mo-god-mo-love/assets/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mo God Mo Love — two women walking, one wearing the Product of God's Grace blazer">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0c0a09">
@@ -267,14 +270,16 @@
   /* Scrolls by itself everywhere. When GSAP takes over the desktop pin it
      adds .pinned and hands scrolling to the ScrollTrigger instead. Without
      this the track was clipped with no way to move it on a phone. */
-  .look-track{display:flex;gap:22px;padding:0 var(--gutter) 14px;will-change:transform;
+  .look-track{display:flex;align-items:flex-start;gap:22px;padding:0 var(--gutter) 14px;will-change:transform;
     overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;
     -webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .look-track::-webkit-scrollbar{display:none;}
   .look-track.pinned{overflow:visible;scroll-snap-type:none;}
   .look{flex:0 0 auto;scroll-snap-align:center;width:clamp(230px,26vw,330px);aspect-ratio:3/4;border-radius:4px;
     overflow:hidden;border:1px solid var(--line-soft);position:relative;background:#141110;}
+  .look.wide{width:clamp(300px,72vw,580px);aspect-ratio:3/2;}
   .look img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease);}
+  .look img.from-top{object-position:50% 0;}
   .look:hover img{transform:scale(1.06);}
   .look figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 16px;z-index:2;
     background:linear-gradient(0deg,rgba(10,9,8,.9),transparent);font-size:10.5px;
@@ -444,7 +449,7 @@
       <a href="#message">The Message</a>
       <a href="#shop">Shop</a>
       <a href="#lookbook">Family Wear</a>
-      <a href="#story">Her Story</a>
+      <a href="#story">My Story</a>
       <a href="#order">Order</a>
     </div>
     <a href="#order" class="navcta magnetic"><span>Reserve Yours</span></a>
@@ -458,7 +463,7 @@
   <a href="#message">The Message</a>
   <a href="#shop">Shop</a>
   <a href="#lookbook">Family Wear</a>
-  <a href="#story">Her Story</a>
+  <a href="#story">My Story</a>
   <a href="#order">Order</a>
 </div>
 
@@ -475,7 +480,7 @@
       <p class="lead rv" data-d="2">Created to uplift, encourage, and remind women of their identity, their worth, and their God-given purpose. Made in small batches by Monique Lovelace.</p>
       <div class="hero-ctas rv" data-d="3">
         <a href="#shop" class="btn magnetic"><span>Wear The Message</span></a>
-        <a href="#story" class="btn-ghost">Read Her Story</a>
+        <a href="#story" class="btn-ghost">Read My Story</a>
       </div>
     </div>
     <div class="hero-visual rv" data-d="2">
@@ -598,9 +603,9 @@
     </div>
   </div>
   <div class="look-track" id="lookTrack">
-    <figure class="look"><img src="assets/img/hero-walk.jpg" alt="Monique with her twins and granddaughter" loading="lazy"><figcaption>Family</figcaption></figure>
+    <figure class="look wide"><img src="assets/img/hero-walk.jpg" alt="Monique with her twins and granddaughter" loading="lazy"><figcaption>Family</figcaption></figure>
     <figure class="look"><img src="assets/img/detail-lapel.jpg" alt="Embroidered lapel detail" loading="lazy"><figcaption>The Lapel</figcaption></figure>
-    <figure class="look"><img src="assets/img/grace-cutout.jpg" alt="Product of God's Grace blazer styled with a red dress" loading="lazy"><figcaption>Day Out</figcaption></figure>
+    <figure class="look"><img class="from-top" src="assets/img/grace-cutout.jpg" alt="Product of God's Grace blazer styled with a red dress" loading="lazy"><figcaption>Day Out</figcaption></figure>
     <figure class="look"><img src="assets/img/community-home.jpg" alt="Wearing the Product of God's Grace blazer at home" loading="lazy"><figcaption>At Home</figcaption></figure>
     <figure class="look"><img src="assets/img/look-01.jpg" alt="Mo God Mo Love look" loading="lazy"><figcaption>Sunday</figcaption></figure>
     <figure class="look"><img src="assets/img/look-02.jpg" alt="Mo God Mo Love look" loading="lazy"><figcaption>Celebration</figcaption></figure>

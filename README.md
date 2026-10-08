@@ -105,6 +105,9 @@ live, do both of these or the real site will stay invisible to Google:
 3. Repoint `og:image` at the real domain. It is currently an absolute
    github.io URL, because Facebook and iMessage will not resolve a relative
    one — and a share card with a broken image is most of the click lost.
+   The card itself is `assets/img/og-card.jpg`, built at 1200x630 so the logo
+   cannot be cropped out; regenerate it rather than pointing og:image at a
+   tall photo.
 
 ## Deploying
 
