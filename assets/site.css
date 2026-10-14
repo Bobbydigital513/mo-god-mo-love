@@ -233,6 +233,7 @@
     position:relative;overflow:hidden;transition:color .35s var(--ease);}
   .btn-block span{position:relative;z-index:2;}
   .btn-block::before{content:"";position:absolute;inset:0;transform:translateY(101%);transition:transform .45s var(--ease);}
+  .totalnote{font-size:12px;letter-spacing:.06em;color:var(--cream-faint);margin:-10px 0 16px;}
   .securenote{margin-top:11px;text-align:center;font-size:10.5px;letter-spacing:.08em;
     color:var(--cream-faint);}
   .btn-block.solid{background:var(--gold);color:var(--ink);}
