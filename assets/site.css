@@ -370,6 +370,9 @@
   footer ul a{color:var(--cream-dim);font-size:13.5px;display:inline-block;
     transition:color .3s var(--ease),padding-left .3s var(--ease);}
   footer ul a:hover{color:var(--gold-bright);padding-left:5px;}
+  .paygroup{margin-bottom:16px;}
+  .paylabel{font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--cream-faint);margin-bottom:9px;}
   .pay{display:flex;flex-wrap:wrap;gap:8px;}
   .pay span{font-size:10.5px;border:1px solid var(--line);padding:7px 12px;border-radius:20px;
     color:var(--cream-dim);transition:all .3s var(--ease);}
