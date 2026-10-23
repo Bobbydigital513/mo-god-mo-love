@@ -83,17 +83,25 @@
   .navcta::before{content:"";position:absolute;inset:0;background:var(--gold);
     transform:translateY(101%);transition:transform .4s var(--ease);}
   .navcta:hover{color:var(--ink);} .navcta:hover::before{transform:translateY(0);}
-  .menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-btn{display:none;background:none;border:none;cursor:pointer;
+    width:46px;height:46px;align-items:center;justify-content:center;
+    flex-direction:column;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
   .menu-btn i{display:block;width:22px;height:1.5px;background:var(--cream);margin:5px 0;
     transition:transform .4s var(--ease),opacity .3s;}
-  .menu-btn.open i:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  /* the bars sit 11.5px apart (1.5px rule + 5px margin each side), so that is
+     how far each has to travel to meet in the middle and make an X */
+  .menu-btn.open i:nth-child(1){transform:translateY(11.5px) rotate(45deg);}
   .menu-btn.open i:nth-child(2){opacity:0;}
-  .menu-btn.open i:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
-  .mobile-menu{display:none;position:fixed;inset:0;z-index:90;background:rgba(10,9,8,.98);
-    backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;
-    opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s;}
+  .menu-btn.open i:nth-child(3){transform:translateY(-11.5px) rotate(-45deg);}
+  /* the header floats above the open menu so the X stays tappable — make it
+     opaque so the two read as one surface instead of a lighter band */
+  body.menu-open header{background:var(--ink);border-bottom-color:transparent;}
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:96;background:var(--ink);
+    flex-direction:column;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;}
+  .mobile-menu.open{transition:opacity .35s var(--ease),visibility 0s;}
   .mobile-menu.open{opacity:1;visibility:visible;}
-  .mobile-menu a{font-family:'Fraunces',serif;font-size:30px;padding:13px;opacity:0;
+  .mobile-menu a{font-family:'Fraunces',serif;font-size:30px;padding:16px 28px;opacity:0;touch-action:manipulation;
     transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
   .mobile-menu.open a{opacity:1;transform:none;}
   .mobile-menu.open a:nth-child(1){transition-delay:.06s}.mobile-menu.open a:nth-child(2){transition-delay:.12s}
@@ -386,7 +394,7 @@
   .foot-bottom .hearts{color:var(--wine-bright);}
 
   @media (max-width:940px){
-    .navlinks,.navcta{display:none;} .menu-btn{display:block;} .mobile-menu{display:flex;}
+    .navlinks,.navcta{display:none;} .menu-btn{display:flex;} .mobile-menu{display:flex;}
     .hero-grid,.story-grid{grid-template-columns:1fr;}
     .hero-visual{order:-1;max-width:420px;margin:0 auto;width:100%;}
     .story-sticky{position:static;} .story-frame{max-width:420px;margin:0 auto;}

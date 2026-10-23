@@ -195,8 +195,12 @@ window.addEventListener('DOMContentLoaded', () => {
     mobileMenu.classList.toggle('open', open);
     menuBtn.classList.toggle('open', open);
     menuBtn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('menu-open', open);
     document.body.style.overflow = open ? 'hidden' : '';
   };
+  // Shop points at this page. Tapping it should close the menu, not reload.
+  mobileMenu.querySelector('a[href="product-of-gods-grace.html"]')
+    ?.addEventListener('click', e => { e.preventDefault(); toggleMenu(false); });
   menuBtn.addEventListener('click', () => toggleMenu());
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
   addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });

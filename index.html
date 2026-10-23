@@ -364,9 +364,9 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script defer>
 window.addEventListener('DOMContentLoaded', () => {
   'use strict';
@@ -404,6 +404,22 @@ window.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(raf);
     }
   }
+  /* ---------- mobile menu ----------
+     Declared up here, before the anchor handler below, because tapping a
+     menu link has to close the menu before it can scroll. */
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function toggleMenu(force){
+    const open = force === undefined ? !mobileMenu.classList.contains('open') : force;
+    mobileMenu.classList.toggle('open', open);
+    menuBtn.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    open ? lenis?.stop() : lenis?.start();
+    document.body.classList.toggle('menu-open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  function closeMenu(){ if (mobileMenu.classList.contains('open')) toggleMenu(false); }
+
   // anchor links have to go through Lenis or they fight the smooth scroller
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
@@ -413,10 +429,17 @@ window.addEventListener('DOMContentLoaded', () => {
       // Opening the mobile menu calls lenis.stop(). Scrolling a stopped Lenis
       // is a no-op, so the menu has to close (which restarts it) before the
       // scroll is issued, and the scroll waits a frame for that to take.
-      const mm = document.getElementById('mobileMenu');
-      if (mm && mm.classList.contains('open')) document.getElementById('menuBtn').click();
+      closeMenu();
+      const to = () => Math.max(0, el.getBoundingClientRect().top + scrollY - 70);
       requestAnimationFrame(() => {
-        lenis ? lenis.scrollTo(el, { offset: -70 }) : el.scrollIntoView({ behavior: 'smooth' });
+        const want = to();
+        if (lenis) lenis.scrollTo(want);
+        else scrollTo({ top: want, behavior: 'smooth' });
+        // Last resort. Smooth scrolling has a lot of ways to quietly do
+        // nothing on a phone — a stopped scroller, a half-applied scroll
+        // lock, an engine that ignores the behavior option. If we have not
+        // actually moved by now, jump. Arriving beats animating.
+        setTimeout(() => { if (Math.abs(scrollY - to()) > 80) scrollTo(0, want); }, 700);
       });
     });
   });
@@ -591,19 +614,9 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- mobile menu ---------- */
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const toggleMenu = force => {
-    const open = force === undefined ? !mobileMenu.classList.contains('open') : force;
-    mobileMenu.classList.toggle('open', open);
-    menuBtn.classList.toggle('open', open);
-    menuBtn.setAttribute('aria-expanded', String(open));
-    open ? lenis?.stop() : lenis?.start();
-    document.body.style.overflow = open ? 'hidden' : '';
-  };
   menuBtn.addEventListener('click', () => toggleMenu());
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
-  addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closeMenu()));
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
   /* ---------- order form ----------
      Set ORDER_ENDPOINT to start delivering reservations.

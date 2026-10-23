@@ -25,13 +25,15 @@ Open it through a server, not by double-clicking the file.
 
 ## Animation
 
-Loaded from CDN, with a working fallback if either fails:
+Self-hosted in `assets/vendor/`, not loaded from a CDN — see the README in
+that folder for versions and licences.
 
 - **Lenis** — momentum smooth scrolling
 - **GSAP + ScrollTrigger** — pinning, scrubbing, the horizontal lookbook
 
-If the CDNs are blocked or slow, the page falls back to IntersectionObserver
-reveals and stays fully usable. That path is tested — don't remove it.
+If either script fails to load the page falls back to IntersectionObserver
+reveals and native smooth scrolling, and stays fully usable. That path is
+tested — don't remove it.
 
 `prefers-reduced-motion` is honored throughout.
 
