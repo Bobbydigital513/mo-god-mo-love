@@ -46,12 +46,12 @@
     </a>
     <div class="navlinks">
       <a href="#message">The Message</a>
-      <a href="#shop">Shop</a>
+      <a href="product-of-gods-grace.html">Shop</a>
       <a href="#lookbook">Family Wear</a>
       <a href="#story">My Story</a>
       <a href="#order">Order</a>
     </div>
-    <a href="#shop" class="navcta magnetic"><span>Shop Now</span></a>
+    <a href="product-of-gods-grace.html" class="navcta magnetic"><span>Shop Now</span></a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
       <i></i><i></i><i></i>
     </button>
@@ -60,7 +60,7 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#message">The Message</a>
-  <a href="#shop">Shop</a>
+  <a href="product-of-gods-grace.html">Shop</a>
   <a href="#lookbook">Family Wear</a>
   <a href="#story">My Story</a>
   <a href="#order">Order</a>
@@ -410,7 +410,14 @@ window.addEventListener('DOMContentLoaded', () => {
       const el = document.querySelector(a.getAttribute('href'));
       if (!el) return;
       e.preventDefault();
-      lenis ? lenis.scrollTo(el, { offset: -70 }) : el.scrollIntoView({ behavior: 'smooth' });
+      // Opening the mobile menu calls lenis.stop(). Scrolling a stopped Lenis
+      // is a no-op, so the menu has to close (which restarts it) before the
+      // scroll is issued, and the scroll waits a frame for that to take.
+      const mm = document.getElementById('mobileMenu');
+      if (mm && mm.classList.contains('open')) document.getElementById('menuBtn').click();
+      requestAnimationFrame(() => {
+        lenis ? lenis.scrollTo(el, { offset: -70 }) : el.scrollIntoView({ behavior: 'smooth' });
+      });
     });
   });
 
@@ -466,6 +473,24 @@ window.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.rv, .mask').forEach(el => io.observe(el));
 
+  /* ---------- which section are we in (a one-page nav needs to know) ---------- */
+  const spy = [...document.querySelectorAll('.navlinks a[href^="#"], .mobile-menu a[href^="#"]')]
+    .map(a => ({ a, el: document.querySelector(a.getAttribute('href')) }))
+    .filter(x => x.el && x.el.id !== 'top');
+  let activeId = null;
+  function markActiveSection(){
+    // Pick the section nearest above the header line. Iterating in nav order
+    // and keeping the last match is wrong — the nav is not in document order.
+    let current = null, best = -Infinity;
+    for (const { el } of spy) {
+      const top = el.getBoundingClientRect().top;
+      if (top <= 140 && top > best) { best = top; current = el.id; }
+    }
+    if (current === activeId) return;
+    activeId = current;
+    spy.forEach(({ a, el }) => a.classList.toggle('active', el.id === current));
+  }
+
   /* ---------- scroll progress + header ---------- */
   const progress = document.getElementById('progress');
   const hdr = document.getElementById('hdr');
@@ -475,6 +500,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
     progress.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
     hdr.classList.toggle('shrunk', y > 50);
+    markActiveSection();
     if (!reduced) for (const el of parallaxEls) {
       const r = el.getBoundingClientRect();
       if (r.bottom < -200 || r.top > innerHeight + 200) continue;

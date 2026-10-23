@@ -73,6 +73,9 @@
   .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;
     background:var(--gold);transition:width .4s var(--ease);}
   .navlinks a:hover::after{width:100%;}
+  .navlinks a.active{color:var(--gold-bright);}
+  .navlinks a.active::after{width:100%;}
+  .mobile-menu a.active{color:var(--gold-bright);}
   .navcta{border:1px solid var(--gold);color:var(--gold-bright);padding:9px 20px;
     font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-radius:2px;
     position:relative;overflow:hidden;transition:color .35s var(--ease);flex:none;}
