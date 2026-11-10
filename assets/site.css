@@ -469,6 +469,8 @@
   /* PayPal renders in its own iframe and will not inherit anything from here,
      so this only reserves the space and keeps it from touching the edges. */
   .ppslot{min-height:48px;}
+  /* the header is sticky, so an anchor jump has to clear it */
+  #buyBlock{scroll-margin-top:92px;}
   .ppdone{border:1px solid var(--gold);border-radius:3px;padding:26px 24px;
     background:rgba(201,162,39,.06);}
   .ppdone h3{font-family:'Fraunces',serif;font-size:24px;color:var(--gold-bright);

@@ -42,7 +42,7 @@
       <a href="index.html#story">My Story</a>
       <a href="index.html#order">Order</a>
     </div>
-    <a href="https://buy.stripe.com/14AdR8fD7dHL63VcTcenS01" class="navcta magnetic"><span>Buy Now</span></a>
+    <a href="#buyBlock" class="navcta magnetic"><span>Buy Now</span></a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
       <i></i><i></i><i></i>
     </button>
@@ -100,10 +100,11 @@
           <div class="buyerr" id="buyErr" role="alert" hidden>Please choose a size first.</div>
 
           <a href="https://buy.stripe.com/14AdR8fD7dHL63VcTcenS01" class="btn-block solid"><span>Buy Now &mdash; $77.99</span></a>
-          <div class="securenote">Card, Klarna, Cash App Pay &amp; Amazon Pay</div>
 
           <div class="buyor" id="buyOr" hidden><span>or</span></div>
           <div class="ppslot" id="paypalSlot" hidden></div>
+
+          <div class="securenote" id="secureNote">Secure checkout &middot; card, Klarna, Cash App Pay &amp; Amazon Pay</div>
         </div>
         <div class="ppdone" id="ppDone" hidden></div>
 
@@ -201,9 +202,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
   sizeSel.addEventListener('change', () => { buyErr.hidden = true; });
 
+  const secure = document.getElementById('secureNote');
+  const WITH_PP = 'Secure checkout \u00b7 card, PayPal, Klarna, Cash App Pay & Amazon Pay';
+  const NO_PP   = 'Secure checkout \u00b7 card, Klarna, Cash App Pay & Amazon Pay';
+  // The note starts without PayPal and only claims it once the button has
+  // really rendered, so a bad PayPal day cannot leave the page promising a
+  // method it is not offering.
+  const dropPaypal = () => {
+    slot.hidden = true;
+    document.getElementById('buyOr').hidden = true;
+    secure.textContent = NO_PP;
+  };
+
   if (typeof paypal !== 'undefined' && paypal.Buttons) {
-    document.getElementById('buyOr').hidden = false;
-    slot.hidden = false;
+    document.getElementById('buyOr').hidden = false;   // unhide before render,
+    slot.hidden = false;                               // PayPal needs a width
     paypal.Buttons({
       style: { layout:'vertical', color:'gold', shape:'rect', label:'paypal', height:48 },
 
@@ -261,9 +274,27 @@ window.addEventListener('DOMContentLoaded', () => {
         // Never leave a dead button sitting there. Stripe is still above it.
         slot.innerHTML = '<div class="buyerr">PayPal could not be reached. ' +
           'Please use the Buy Now button above, or call 513-601-9372.</div>';
+        secure.textContent = NO_PP;
       },
-    }).render('#paypalSlot').catch(() => { slot.hidden = true; document.getElementById('buyOr').hidden = true; });
+    }).render('#paypalSlot')
+      .then(() => { secure.textContent = WITH_PP; })
+      .catch(dropPaypal);
+  } else {
+    dropPaypal();
   }
+
+  /* ---------- in-page Buy Now in the header ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      const to = () => Math.max(0, el.getBoundingClientRect().top + scrollY - 90);
+      const want = to();
+      scrollTo({ top: want, behavior: 'smooth' });
+      setTimeout(() => { if (Math.abs(scrollY - to()) > 80) scrollTo(0, want); }, 700);
+    });
+  });
 
   /* ---------- magnetic buttons ---------- */
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer:fine)').matches) {
