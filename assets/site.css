@@ -234,6 +234,7 @@
   .card-body .pname{font-family:'Fraunces',serif;font-size:20px;margin-bottom:6px;line-height:1.2;}
   .card-body .pdetail{font-size:11.5px;color:var(--cream-faint);letter-spacing:.05em;margin-bottom:16px;}
   .card-body .price{font-family:'Fraunces',serif;font-size:25px;color:var(--gold-bright);margin-bottom:18px;}
+  .price .was,.pdp-price .was{color:var(--cream-faint);font-size:.7em;text-decoration:line-through;margin-right:4px;}
   .card-body .price small{font-size:11px;color:var(--cream-faint);font-family:'Inter',sans-serif;letter-spacing:.05em;}
   .sizes{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
   .sizes span{font-size:10.5px;border:1px solid var(--line);color:var(--cream-dim);
