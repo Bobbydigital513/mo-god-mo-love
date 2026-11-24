@@ -12,7 +12,7 @@
 set -euo pipefail
 
 # ---- the only things you should need to change -------------------------
-SHIPPING_CENTS=900                 # $9.00 flat. SHE STILL HAS TO CONFIRM THIS.
+SHIPPING_CENTS=999                 # $9.99 flat, as confirmed and now live
 PRICE_CENTS=6800                   # $68.00
 IMAGE="https://bobbydigital513.github.io/mo-god-mo-love/assets/img/grace-studio.jpg"
 # ------------------------------------------------------------------------
